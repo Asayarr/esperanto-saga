@@ -353,35 +353,35 @@
         <h2 class="text-3xl font-bold mb-6 text-green-800 title-animate">世界语基础学习</h2>
         <h3 class="text-xl font-semibold mb-4 text-green-700">常用单词</h3>
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
-            <div onclick="speak('saluton', 'epo')" class="word-card">
+            <div onclick="speak('saluton')" class="word-card">
                 <p class="text-2xl font-bold text-green-600">saluton</p>
                 <p class="text-green-800">你好</p>
             </div>
-            <div onclick="speak('dankon', 'epo')" class="word-card">
+            <div onclick="speak('dankon')" class="word-card">
                 <p class="text-2xl font-bold text-green-600">dankon</p>
                 <p class="text-green-800">谢谢</p>
             </div>
-            <div onclick="speak('ami', 'epo')" class="word-card">
+            <div onclick="speak('ami')" class="word-card">
                 <p class="text-2xl font-bold text-green-600">ami</p>
                 <p class="text-green-800">爱</p>
             </div>
-            <div onclick="speak('libro', 'epo')" class="word-card">
+            <div onclick="speak('libro')" class="word-card">
                 <p class="text-2xl font-bold text-green-600">libro</p>
                 <p class="text-green-800">书</p>
             </div>
-            <div onclick="speak('domo', 'epo')" class="word-card">
+            <div onclick="speak('domo')" class="word-card">
                 <p class="text-2xl font-bold text-green-600">domo</p>
                 <p class="text-green-800">房子</p>
             </div>
-            <div onclick="speak('akvo', 'epo')" class="word-card">
+            <div onclick="speak('akvo')" class="word-card">
                 <p class="text-2xl font-bold text-green-600">akvo</p>
                 <p class="text-green-800">水</p>
             </div>
-            <div onclick="speak('patrino', 'epo')" class="word-card">
+            <div onclick="speak('patrino')" class="word-card">
                 <p class="text-2xl font-bold text-green-600">patrino</p>
                 <p class="text-green-800">妈妈</p>
             </div>
-            <div onclick="speak('patro', 'epo')" class="word-card">
+            <div onclick="speak('patro')" class="word-card">
                 <p class="text-2xl font-bold text-green-600">patro</p>
                 <p class="text-green-800">爸爸</p>
             </div>
@@ -547,10 +547,9 @@
         }
 
         // 发音功能
-        function speak(text, lang) {
-            const utterance = new SpeechSynthesisUtterance(text)
-            utterance.lang = lang
-            speechSynthesis.speak(utterance)
+        function speak(word) {
+            const audio = new Audio(`audio/${word}.ogg`);
+            audio.play();
         }
 
        // 答题
