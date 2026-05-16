@@ -3,55 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>世界语Esperanto交互学习网站</title>
-    <!-- 引入Tailwind CSS -->
+    <title>世界语 Esperanto 交互学习网站</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        :root {
+            --green-50: #f0fdf4;
+            --green-100: #dcfce7;
+            --green-200: #bbf7d0;
+            --green-300: #86efac;
+            --green-400: #4ade80;
+            --green-500: #22c55e;
+            --green-600: #16a34a;
+            --green-700: #15803d;
+            --green-800: #14532d;
+            --green-900: #052e16;
+            --easing: cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
         body {
-            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 25%, #bbf7d0 50%, #86efac 75%, #4ade80 100%);
+            background: linear-gradient(135deg, var(--green-50) 0%, var(--green-100) 25%, var(--green-200) 50%, var(--green-300) 75%, var(--green-400) 100%);
             background-attachment: fixed;
             min-height: 100vh;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             overflow-x: hidden;
         }
 
-        /* 鼠标跟随光晕 */
         .cursor-glow {
             position: fixed;
             width: 350px;
             height: 350px;
-            background: radial-gradient(circle, rgba(34, 197, 94, 0.25) 0%, rgba(74, 222, 128, 0.1) 50%, transparent 70%);
+            background: radial-gradient(circle, rgba(34,197,94,0.25) 0%, rgba(74,222,128,0.1) 50%, transparent 70%);
             border-radius: 50%;
             pointer-events: none;
             transform: translate(-50%, -50%);
-            transition: transform 0.1s ease-out;
             z-index: 0;
+            will-change: left, top;
         }
 
-        /* 导航栏简约绿色 */
         nav {
-            background: linear-gradient(135deg, rgba(34, 197, 94, 0.95) 0%, rgba(22, 163, 74, 0.95) 100%);
+            background: linear-gradient(135deg, rgba(34,197,94,0.95) 0%, rgba(22,163,74,0.95) 100%);
             backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
+            transition: box-shadow 0.3s ease;
         }
+        nav:hover { box-shadow: 0 8px 32px rgba(34,197,94,0.3); }
 
-        nav:hover {
-            box-shadow: 0 8px 32px rgba(34, 197, 94, 0.3);
-        }
-
-        /* 导航按钮交互 */
         .nav-btn {
             position: relative;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: all 0.3s var(--easing);
             overflow: hidden;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: inherit;
         }
-
         .nav-btn::before {
             content: '';
             position: absolute;
@@ -60,114 +69,88 @@
             width: 0;
             height: 2px;
             background: white;
-            transition: all 0.3s ease;
+            transition: width 0.3s ease;
             transform: translateX(-50%);
         }
+        .nav-btn:hover::before { width: 100%; }
+        .nav-btn:hover { transform: translateY(-2px); }
 
-        .nav-btn:hover::before {
-            width: 100%;
-        }
-
-        .nav-btn:hover {
-            transform: translateY(-2px);
-        }
-
-        /* Logo 星星旋转 */
         .logo-star {
-            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: transform 0.5s var(--easing);
+            cursor: default;
         }
+        .logo-star:hover { transform: rotate(180deg) scale(1.2); }
 
-        .logo-star:hover {
-            transform: rotate(180deg) scale(1.2);
-        }
-
-        /* 内容卡片 */
-        .content-card {
-            background: linear-gradient(145deg, rgba(255, 255, 255, 0.95) 0%, rgba(240, 253, 244, 0.9) 100%);
+        .content-card, .grammar-card {
+            background: linear-gradient(145deg, rgba(255,255,255,0.95) 0%, rgba(240,253,244,0.9) 100%);
             border-radius: 20px;
-            box-shadow: 0 4px 20px rgba(34, 197, 94, 0.1);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(34,197,94,0.1);
+            transition: all 0.4s var(--easing);
             backdrop-filter: blur(10px);
+            will-change: transform;
         }
-
         .content-card:hover {
             transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 12px 40px rgba(34, 197, 94, 0.2);
+            box-shadow: 0 12px 40px rgba(34,197,94,0.2);
         }
 
-        /* 学习单词卡片 */
         .word-card {
             background: white;
             border-radius: 16px;
             padding: 1.5rem;
-            box-shadow: 0 4px 15px rgba(34, 197, 94, 0.1);
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 4px 15px rgba(34,197,94,0.1);
+            transition: all 0.3s var(--easing);
             cursor: pointer;
             text-align: center;
             position: relative;
             overflow: hidden;
+            will-change: transform;
         }
-
         .word-card::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(34, 197, 94, 0.1) 0%, transparent 100%);
+            inset: 0;
+            background: linear-gradient(135deg, rgba(34,197,94,0.1) 0%, transparent 100%);
             opacity: 0;
             transition: opacity 0.3s ease;
         }
-
         .word-card:hover {
             transform: translateY(-12px) scale(1.08);
-            box-shadow: 0 20px 40px rgba(34, 197, 94, 0.25);
+            box-shadow: 0 20px 40px rgba(34,197,94,0.25);
         }
+        .word-card:hover::before { opacity: 1; }
+        .word-card:active { transform: translateY(-8px) scale(1.05); }
 
-        .word-card:hover::before {
-            opacity: 1;
-        }
-
-        .word-card:active {
-            transform: translateY(-8px) scale(1.05);
-        }
-
-        /* 按钮样式 */
         .green-btn {
-            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+            background: linear-gradient(135deg, var(--green-500) 0%, var(--green-600) 100%);
             color: white;
             padding: 12px 32px;
             border-radius: 30px;
             border: none;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3);
+            transition: all 0.3s var(--easing);
+            box-shadow: 0 4px 15px rgba(34,197,94,0.3);
             font-weight: 500;
+            text-decoration: none;
+            display: inline-block;
         }
-
         .green-btn:hover {
             transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 8px 25px rgba(34, 197, 94, 0.4);
+            box-shadow: 0 8px 25px rgba(34,197,94,0.4);
         }
+        .green-btn:active { transform: translateY(-1px) scale(1.02); }
 
-        .green-btn:active {
-            transform: translateY(-1px) scale(1.02);
-        }
-
-        /* 答题按钮 */
         .quiz-btn {
             background: white;
             border: 2px solid #e5e7eb;
             padding: 12px 20px;
             border-radius: 12px;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: all 0.3s var(--easing);
             cursor: pointer;
             position: relative;
             overflow: hidden;
+            will-change: transform;
         }
-
         .quiz-btn::before {
             content: '';
             position: absolute;
@@ -175,155 +158,116 @@
             left: 50%;
             width: 0;
             height: 0;
-            background: rgba(34, 197, 94, 0.1);
+            background: rgba(34,197,94,0.1);
             border-radius: 50%;
             transform: translate(-50%, -50%);
-            transition: all 0.4s ease;
+            transition: width 0.4s ease, height 0.4s ease;
         }
-
-        .quiz-btn:hover::before {
-            width: 300px;
-            height: 300px;
-        }
-
+        .quiz-btn:hover::before { width: 300px; height: 300px; }
         .quiz-btn:hover {
-            border-color: #22c55e;
+            border-color: var(--green-500);
             transform: translateY(-4px) scale(1.02);
-            box-shadow: 0 8px 20px rgba(34, 197, 94, 0.15);
+            box-shadow: 0 8px 20px rgba(34,197,94,0.15);
         }
+        .quiz-btn:active { transform: translateY(-2px) scale(1.01); }
+        .quiz-btn:disabled { cursor: not-allowed; opacity: 0.9; }
 
-        .quiz-btn:active {
-            transform: translateY(-2px) scale(1.01);
-        }
-
-        /* 图片容器 */
         .img-container {
             position: relative;
             overflow: hidden;
             border-radius: 20px;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: all 0.4s var(--easing);
+            will-change: transform;
         }
-
         .img-container:hover {
             transform: scale(1.05);
-            box-shadow: 0 20px 40px rgba(34, 197, 94, 0.3);
+            box-shadow: 0 20px 40px rgba(34,197,94,0.3);
         }
+        .img-container img { transition: transform 0.4s ease; }
+        .img-container:hover img { transform: scale(1.1); }
 
-        .img-container img {
-            transition: transform 0.4s ease;
-        }
-
-        .img-container:hover img {
-            transform: scale(1.1);
-        }
-
-        /* 语法规则卡片 */
         .grammar-card {
             background: white;
             border-radius: 16px;
             padding: 1.5rem;
-            box-shadow: 0 4px 15px rgba(34, 197, 94, 0.1);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 4px 15px rgba(34,197,94,0.1);
+            transition: all 0.4s var(--easing);
         }
-
         .grammar-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 12px 30px rgba(34, 197, 94, 0.2);
+            box-shadow: 0 12px 30px rgba(34,197,94,0.2);
         }
 
-        /* 浮动装饰 */
         .floating-leaf {
             position: fixed;
             width: 40px;
             height: 40px;
-            background: linear-gradient(135deg, rgba(34, 197, 94, 0.3) 0%, rgba(74, 222, 128, 0.2) 100%);
+            background: linear-gradient(135deg, rgba(34,197,94,0.3) 0%, rgba(74,222,128,0.2) 100%);
             border-radius: 50% 0 50% 0;
             pointer-events: none;
             animation: float 8s ease-in-out infinite;
             z-index: 0;
         }
-
         @keyframes float {
-            0%, 100% {
-                transform: translateY(0px) rotate(0deg);
-                opacity: 0.6;
-            }
-            50% {
-                transform: translateY(-30px) rotate(180deg);
-                opacity: 1;
-            }
+            0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.6; }
+            50% { transform: translateY(-30px) rotate(180deg); opacity: 1; }
         }
 
-        /* 标题动画 */
         .title-animate {
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            cursor: default;
+            transition: transform 0.4s var(--easing), text-shadow 0.4s var(--easing);
         }
-
         .title-animate:hover {
             transform: translateY(-5px) scale(1.02);
-            text-shadow: 2px 2px 8px rgba(34, 197, 94, 0.3);
+            text-shadow: 2px 2px 8px rgba(34,197,94,0.3);
         }
 
-        /* 答案反馈 */
         .correct {
             background: linear-gradient(135deg, #bbf7d0 0%, #86efac 100%) !important;
-            border-color: #22c55e !important;
+            border-color: var(--green-500) !important;
             animation: pulse 0.5s ease;
         }
-
         .incorrect {
             background: linear-gradient(135deg, #fecaca 0%, #fca5a5 100%) !important;
             border-color: #ef4444 !important;
             animation: shake 0.5s ease;
         }
-
         @keyframes pulse {
             0%, 100% { transform: scale(1); }
             50% { transform: scale(1.05); }
         }
-
         @keyframes shake {
             0%, 100% { transform: translateX(0); }
             25% { transform: translateX(-5px); }
             75% { transform: translateX(5px); }
         }
 
-        /* 响应式 */
         @media (max-width: 768px) {
-            .cursor-glow {
-                width: 200px;
-                height: 200px;
-            }
+            .cursor-glow { width: 200px; height: 200px; }
         }
     </style>
 </head>
 <body class="min-h-screen flex flex-col">
-    <!-- 鼠标跟随光晕 -->
-    <div class="cursor-glow" id="cursorGlow"></div>
+    <div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
 
-    <!-- 浮动装饰 -->
-    <div class="floating-leaf" style="top: 15%; left: 5%; animation-delay: 0s;"></div>
-    <div class="floating-leaf" style="top: 45%; right: 8%; animation-delay: 2s;"></div>
-    <div class="floating-leaf" style="bottom: 20%; left: 12%; animation-delay: 4s;"></div>
+    <div class="floating-leaf" style="top:15%;left:5%;animation-delay:0s" aria-hidden="true"></div>
+    <div class="floating-leaf" style="top:45%;right:8%;animation-delay:2s" aria-hidden="true"></div>
+    <div class="floating-leaf" style="bottom:20%;left:12%;animation-delay:4s" aria-hidden="true"></div>
 
-    <!-- 导航栏 -->
-    <nav class="text-white p-4 sticky top-0 z-50 shadow-md">
+    <nav class="text-white p-4 sticky top-0 z-50 shadow-md" role="navigation" aria-label="主导航">
         <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-3">
             <h1 class="text-xl md:text-2xl font-bold flex items-center gap-2 title-animate">
-                <span class="logo-star bg-white text-green-600 w-8 h-8 rounded-full flex items-center justify-center text-sm">★</span>
+                <span class="logo-star bg-white text-green-600 w-8 h-8 rounded-full flex items-center justify-center text-sm" aria-hidden="true">★</span>
                 Esperanto 世界语
             </h1>
-            <div class="flex gap-4 md:gap-6 text-sm md:text-base">
-                <button onclick="showSection('home')" class="nav-btn hover:text-green-100 transition-colors px-2 py-1 rounded" data-section="home">首页</button>
-                <button onclick="showSection('learn')" class="nav-btn hover:text-green-100 transition-colors px-2 py-1 rounded" data-section="learn">基础学习</button>
-                <button onclick="showSection('game')" class="nav-btn hover:text-green-100 transition-colors px-2 py-1 rounded" data-section="game">趣味闯关</button>
+            <div class="flex gap-4 md:gap-6 text-sm md:text-base" id="navButtons">
+                <button class="nav-btn" data-section="home">首页</button>
+                <button class="nav-btn" data-section="learn">基础学习</button>
+                <button class="nav-btn" data-section="game">趣味闯关</button>
             </div>
         </div>
     </nav>
 
     <main class="flex-grow relative z-10">
-        <!-- 首页区域 -->
         <section id="home" class="max-w-7xl mx-auto p-6">
             <div class="grid md:grid-cols-2 gap-8 items-center mt-6 md:mt-12">
                 <div>
@@ -332,295 +276,214 @@
                     <p class="text-lg mb-3 text-green-900 leading-relaxed opacity-80">它的语法<strong class="text-green-700">只有16条规则、无任何例外</strong>，发音完全拼写对应，普通人只需要几十小时就能掌握基础交流能力。</p>
                     <p class="text-lg mb-8 text-green-900 leading-relaxed opacity-80">目前全球有超过1000万世界语使用者，遍布100多个国家和地区，每年都会举办国际世界语大会（UK）。</p>
                     <div class="flex flex-wrap gap-4">
-                        <button onclick="showSection('learn')" class="green-btn">
-                            📚 开始学习
-                        </button>
-                        <a 
-                        href="https://www.chinaesperantoligo.com.cn/esperanto" target="_blank" class="green-btn">
-                        🌍 中华全国世界语协会
-                        </a>
+                        <button class="green-btn" data-section="learn">📚 开始学习</button>
+                        <a href="https://www.chinaesperantoligo.com.cn/esperanto" target="_blank" rel="noopener" class="green-btn">🌍 中华全国世界语协会</a>
                     </div>
                 </div>
                 <div class="flex flex-col items-center md:items-end gap-4">
                     <div class="img-container border-4 border-white shadow-xl">
-                        <img src="zamenhof.jpg"
-                             alt="柴门霍夫 世界语创始人"
-                             class="w-full max-w-[240px] md:max-w-[300px] rounded-2xl object-cover">
+                        <img src="zamenhof.jpg" alt="柴门霍夫 世界语创始人" class="w-full max-w-[240px] md:max-w-[300px] rounded-2xl object-cover">
                     </div>
                     <p class="text-sm text-green-700 italic text-center md:text-right">L. L. Zamenhof (1859-1917)</p>
                 </div>
             </div>
         </section>
 
-    <!-- 学习区域 -->
-    <section id="learn" class="max-w-7xl mx-auto p-6 hidden">
-        <h2 class="text-3xl font-bold mb-6 text-green-800 title-animate">世界语基础学习</h2>
-        <h3 class="text-xl font-semibold mb-4 text-green-700">常用单词</h3>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
-            <div onclick="speak('saluton')" class="word-card">
-                <p class="text-2xl font-bold text-green-600">saluton</p>
-                <p class="text-green-800">你好</p>
+        <section id="learn" class="max-w-7xl mx-auto p-6 hidden">
+            <h2 class="text-3xl font-bold mb-6 text-green-800 title-animate">世界语基础学习</h2>
+            <h3 class="text-xl font-semibold mb-4 text-green-700">常用单词</h3>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10" id="wordGrid"></div>
+            <h3 class="text-xl font-semibold mb-4 text-green-700">基础语法规则</h3>
+            <div class="grammar-card">
+                <ul class="list-disc pl-5 space-y-2 text-green-900">
+                    <li>名词全部以-o结尾，复数加-j，宾格加-n：libro(书,单数主格) → libroj(复数主格) → libron(单数宾格)</li>
+                    <li>形容词全部以-a结尾，和所修饰的名词性数一致：bela domo(漂亮的房子) → belaj domoj(漂亮的房子们)</li>
+                    <li>动词原形全部以-i结尾，现在时-as，过去时-is，将来时-os：mi amas(我爱) → mi amis(我爱过) → mi amos(我将爱)</li>
+                    <li>没有不规则变化，所有语法规则16条，没有例外</li>
+                </ul>
             </div>
-            <div onclick="speak('dankon')" class="word-card">
-                <p class="text-2xl font-bold text-green-600">dankon</p>
-                <p class="text-green-800">谢谢</p>
-            </div>
-            <div onclick="speak('ami')" class="word-card">
-                <p class="text-2xl font-bold text-green-600">ami</p>
-                <p class="text-green-800">爱</p>
-            </div>
-            <div onclick="speak('libro')" class="word-card">
-                <p class="text-2xl font-bold text-green-600">libro</p>
-                <p class="text-green-800">书</p>
-            </div>
-            <div onclick="speak('domo')" class="word-card">
-                <p class="text-2xl font-bold text-green-600">domo</p>
-                <p class="text-green-800">房子</p>
-            </div>
-            <div onclick="speak('akvo')" class="word-card">
-                <p class="text-2xl font-bold text-green-600">akvo</p>
-                <p class="text-green-800">水</p>
-            </div>
-            <div onclick="speak('patrino')" class="word-card">
-                <p class="text-2xl font-bold text-green-600">patrino</p>
-                <p class="text-green-800">妈妈</p>
-            </div>
-            <div onclick="speak('patro')" class="word-card">
-                <p class="text-2xl font-bold text-green-600">patro</p>
-                <p class="text-green-800">爸爸</p>
-            </div>
-        </div>
+        </section>
 
-        <h3 class="text-xl font-semibold mb-4 text-green-700">基础语法规则</h3>
-        <div class="grammar-card">
-            <ul class="list-disc pl-5 space-y-2 text-green-900">
-                <li>名词全部以-o结尾，复数加-j，宾格加-n：libro(书,单数主格) → libroj(复数主格) → libron(单数宾格)</li>
-                <li>形容词全部以-a结尾，和所修饰的名词性数一致：bela domo(漂亮的房子) → belaj domoj(漂亮的房子们)</li>
-                <li>动词原形全部以-i结尾，现在时-as，过去时-is，将来时-os：mi amas(我爱) → mi amis(我爱过) → mi amos(我将爱)</li>
-                <li>没有不规则变化，所有语法规则16条，没有例外</li>
-            </ul>
-        </div>
-    </section>
-
-    <!-- 闯关 -->
         <section id="game" class="max-w-7xl mx-auto p-6 hidden">
             <h2 class="text-3xl font-bold mb-6 text-green-800 title-animate">世界语知识小闯关（10题）</h2>
-
-            <!-- 第1题 -->
-            <div class="content-card p-6 max-w-2xl mx-auto mb-6">
-                <p class="text-lg mb-4 font-semibold text-green-800">第1题：世界语中"你好"怎么说？</p>
-                <div class="grid grid-cols-2 gap-3">
-                    <button onclick="answer(this, false)" class="quiz-btn">dankon</button>
-                    <button onclick="answer(this, true)" class="quiz-btn">saluton</button>
-                    <button onclick="answer(this, false)" class="quiz-btn">ami</button>
-                    <button onclick="answer(this, false)" class="quiz-btn">akvo</button>
-                </div>
-            </div>
-
-            <!-- 第2题 -->
-            <div class="content-card p-6 max-w-2xl mx-auto mb-6">
-                <p class="text-lg mb-4 font-semibold text-green-800">第2题：世界语中"谢谢"怎么说？</p>
-                <div class="grid grid-cols-2 gap-3">
-                    <button onclick="answer(this, true)" class="quiz-btn">dankon</button>
-                    <button onclick="answer(this, false)" class="quiz-btn">saluton</button>
-                    <button onclick="answer(this, false)" class="quiz-btn">libro</button>
-                    <button onclick="answer(this, false)" class="quiz-btn">domo</button>
-                </div>
-            </div>
-
-            <!-- 第3题 -->
-            <div class="content-card p-6 max-w-2xl mx-auto mb-6">
-                <p class="text-lg mb-4 font-semibold text-green-800">第3题：世界语名词通常以什么结尾？</p>
-                <div class="grid grid-cols-2 gap-3">
-                    <button onclick="answer(this, false)" class="quiz-btn">-a</button>
-                    <button onclick="answer(this, false)" class="quiz-btn">-i</button>
-                    <button onclick="answer(this, true)" class="quiz-btn">-o</button>
-                    <button onclick="answer(this, false)" class="quiz-btn">-n</button>
-                </div>
-            </div>
-
-            <!-- 第4题 -->
-            <div class="content-card p-6 max-w-2xl mx-auto mb-6">
-                <p class="text-lg mb-4 font-semibold text-green-800">第4题：世界语中"书"怎么说？</p>
-                <div class="grid grid-cols-2 gap-3">
-                    <button onclick="answer(this, true)" class="quiz-btn">libro</button>
-                    <button onclick="answer(this, false)" class="quiz-btn">domo</button>
-                    <button onclick="answer(this, false)" class="quiz-btn">akvo</button>
-                    <button onclick="answer(this, false)" class="quiz-btn">ami</button>
-                </div>
-            </div>
-
-            <!-- 第5题 -->
-            <div class="content-card p-6 max-w-2xl mx-auto mb-6">
-                <p class="text-lg mb-4 font-semibold text-green-800">第5题：世界语的创始人是谁？</p>
-                <div class="grid grid-cols-2 gap-3">
-                    <button onclick="answer(this, false)" class="quiz-btn">爱因斯坦</button>
-                    <button onclick="answer(this, true)" class="quiz-btn">柴门霍夫</button>
-                    <button onclick="answer(this, false)" class="quiz-btn">牛顿</button>
-                    <button onclick="answer(this, false)" class="quiz-btn">居里夫人</button>
-                </div>
-            </div>
-
-            <!-- 第6题 -->
-            <div class="content-card p-6 max-w-2xl mx-auto mb-6">
-                <p class="text-lg mb-4 font-semibold text-green-800">第6题：世界语中"水"怎么说？</p>
-                <div class="grid grid-cols-2 gap-3">
-                    <button onclick="answer(this, true)" class="quiz-btn">akvo</button>
-                    <button onclick="answer(this, false)" class="quiz-btn">panjo</button>
-                    <button onclick="answer(this, false)" class="quiz-btn">patro</button>
-                    <button onclick="answer(this, false)" class="quiz-btn">libro</button>
-                </div>
-            </div>
-
-            <!-- 第7题 -->
-            <div class="content-card p-6 max-w-2xl mx-auto mb-6">
-                <p class="text-lg mb-4 font-semibold text-green-800">第7题：世界语动词现在时以什么结尾？</p>
-                <div class="grid grid-cols-2 gap-3">
-                    <button onclick="answer(this, false)" class="quiz-btn">-is</button>
-                    <button onclick="answer(this, true)" class="quiz-btn">-as</button>
-                    <button onclick="answer(this, false)" class="quiz-btn">-os</button>
-                    <button onclick="answer(this, false)" class="quiz-btn">-i</button>
-                </div>
-            </div>
-
-            <!-- 第8题 -->
-            <div class="content-card p-6 max-w-2xl mx-auto mb-6">
-                <p class="text-lg mb-4 font-semibold text-green-800">第8题：世界语中"妈妈"怎么说？</p>
-                <div class="grid grid-cols-2 gap-3">
-                    <button onclick="answer(this, false)" class="quiz-btn">patro</button>
-                    <button onclick="answer(this, true)" class="quiz-btn">panjo</button>
-                    <button onclick="answer(this, false)" class="quiz-btn">ami</button>
-                    <button onclick="answer(this, false)" class="quiz-btn">domo</button>
-                </div>
-            </div>
-
-            <!-- 第9题 -->
-            <div class="content-card p-6 max-w-2xl mx-auto mb-6">
-                <p class="text-lg mb-4 font-semibold text-green-800">第9题：世界语形容词通常以什么结尾？</p>
-                <div class="grid grid-cols-2 gap-3">
-                    <button onclick="answer(this, false)" class="quiz-btn">-o</button>
-                    <button onclick="answer(this, false)" class="quiz-btn">-i</button>
-                    <button onclick="answer(this, true)" class="quiz-btn">-a</button>
-                    <button onclick="answer(this, false)" class="quiz-btn">-j</button>
-                </div>
-            </div>
-
-            <!-- 第10题 -->
-            <div class="content-card p-6 max-w-2xl mx-auto mb-6">
-                <p class="text-lg mb-4 font-semibold text-green-800">第10题：世界语创立于哪一年？</p>
-                <div class="grid grid-cols-2 gap-3">
-                    <button onclick="answer(this, true)" class="quiz-btn">1887年</button>
-                    <button onclick="answer(this, false)" class="quiz-btn">1900年</button>
-                    <button onclick="answer(this, false)" class="quiz-btn">1859年</button>
-                    <button onclick="answer(this, false)" class="quiz-btn">1917年</button>
-                </div>
-            </div>
+            <div id="quizContainer"></div>
         </section>
     </main>
 
     <script>
-        // 鼠标跟随光晕效果
-        const cursorGlow = document.getElementById('cursorGlow');
-        let mouseX = 0, mouseY = 0;
-        let glowX = 0, glowY = 0;
+    (function () {
+        'use strict';
 
-        document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-        });
+        // ── 数据 ──
+        const words = [
+            { eo: 'saluton', zh: '你好' },
+            { eo: 'dankon', zh: '谢谢' },
+            { eo: 'ami', zh: '爱' },
+            { eo: 'libro', zh: '书' },
+            { eo: 'domo', zh: '房子' },
+            { eo: 'akvo', zh: '水' },
+            { eo: 'patrino', zh: '妈妈' },
+            { eo: 'patro', zh: '爸爸' }
+        ];
 
-        function updateGlowPosition() {
-            const dx = mouseX - glowX;
-            const dy = mouseY - glowY;
+        const quizData = [
+            { q: '世界语中"你好"怎么说？', opts: ['dankon', 'saluton', 'ami', 'akvo'], correct: 1 },
+            { q: '世界语中"谢谢"怎么说？', opts: ['dankon', 'saluton', 'libro', 'domo'], correct: 0 },
+            { q: '世界语名词通常以什么结尾？', opts: ['-a', '-i', '-o', '-n'], correct: 2 },
+            { q: '世界语中"书"怎么说？', opts: ['libro', 'domo', 'akvo', 'ami'], correct: 0 },
+            { q: '世界语的创始人是谁？', opts: ['爱因斯坦', '柴门霍夫', '牛顿', '居里夫人'], correct: 1 },
+            { q: '世界语中"水"怎么说？', opts: ['akvo', 'panjo', 'patro', 'libro'], correct: 0 },
+            { q: '世界语动词现在时以什么结尾？', opts: ['-is', '-as', '-os', '-i'], correct: 1 },
+            { q: '世界语中"妈妈"怎么说？', opts: ['patro', 'panjo', 'ami', 'domo'], correct: 1 },
+            { q: '世界语形容词通常以什么结尾？', opts: ['-o', '-i', '-a', '-j'], correct: 2 },
+            { q: '世界语创立于哪一年？', opts: ['1887年', '1900年', '1859年', '1917年'], correct: 0 }
+        ];
 
-            glowX += dx * 0.1;
-            glowY += dy * 0.1;
-
-            cursorGlow.style.left = glowX + 'px';
-            cursorGlow.style.top = glowY + 'px';
-
-            requestAnimationFrame(updateGlowPosition);
+        // ── 构建 DOM ──
+        function buildWordCards() {
+            const grid = document.getElementById('wordGrid');
+            grid.innerHTML = words.map(({ eo, zh }) =>
+                `<div class="word-card" data-word="${eo}" role="button" tabindex="0" aria-label="${eo} - ${zh}">
+                    <p class="text-2xl font-bold text-green-600">${eo}</p>
+                    <p class="text-green-800">${zh}</p>
+                </div>`).join('');
         }
 
-        updateGlowPosition();
-
-        // 切换板块功能
-        function showSection(id) {
-            document.querySelectorAll('section').forEach(sec => sec.classList.add('hidden'))
-            document.getElementById(id).classList.remove('hidden')
+        function buildQuiz() {
+            const container = document.getElementById('quizContainer');
+            container.innerHTML = quizData.map(({ q, opts, correct }, i) =>
+                `<div class="content-card p-6 max-w-2xl mx-auto mb-6" role="group" aria-label="第${i + 1}题">
+                    <p class="text-lg mb-4 font-semibold text-green-800">第${i + 1}题：${q}</p>
+                    <div class="grid grid-cols-2 gap-3">
+                        ${opts.map((opt, j) =>
+                            `<button class="quiz-btn" data-correct="${j === correct}" aria-label="${opt}">${opt}</button>`
+                        ).join('')}
+                    </div>
+                </div>`).join('');
         }
 
-        // 发音功能
+        // ── 发音（缓存 Audio 对象） ──
+        const audioCache = {};
         function speak(word) {
-            const audio = new Audio(`audio/${word}.ogg`);
-            audio.play();
+            if (!audioCache[word]) {
+                audioCache[word] = new Audio(`audio/${word}.ogg`);
+            }
+            const a = audioCache[word];
+            a.currentTime = 0;
+            a.play().catch(() => {});
         }
 
-       // 答题
-        function answer(btn, isCorrect) {
-            const parent = btn.parentElement;
-            const buttons = parent.querySelectorAll('button');
+        // ── 答题（事件委托） ──
+        function handleQuizClick(e) {
+            const btn = e.target.closest('.quiz-btn');
+            if (!btn || btn.disabled) return;
 
-            // 禁用所有按钮
+            const card = btn.closest('.content-card');
+            const buttons = card.querySelectorAll('.quiz-btn');
+            const isCorrect = btn.dataset.correct === 'true';
+
             buttons.forEach(b => b.disabled = true);
 
-            if(isCorrect) {
+            if (isCorrect) {
                 btn.classList.add('correct');
             } else {
                 btn.classList.add('incorrect');
-                // 显示正确答案
                 buttons.forEach(b => {
-                    if(b.onclick.toString().includes('true')) {
-                        b.classList.add('correct');
-                    }
+                    if (b.dataset.correct === 'true') b.classList.add('correct');
                 });
             }
         }
 
-        // 为交互元素添加3D倾斜效果
-        const interactiveElements = document.querySelectorAll('.content-card, .word-card, .grammar-card');
+        document.getElementById('quizContainer').addEventListener('click', handleQuizClick);
 
-        interactiveElements.forEach(element => {
-            element.addEventListener('mousemove', (e) => {
-                const rect = element.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
+        // ── 导航切换 ──
+        function showSection(id) {
+            document.querySelectorAll('section').forEach(s => s.classList.add('hidden'));
+            document.getElementById(id).classList.remove('hidden');
+        }
 
-                const centerX = rect.width / 2;
-                const centerY = rect.height / 2;
+        // 导航栏、首页按钮均用事件委托
+        document.addEventListener('click', function (e) {
+            const trigger = e.target.closest('[data-section]');
+            if (trigger) showSection(trigger.dataset.section);
 
-                const rotateX = (y - centerY) / 20;
-                const rotateY = (centerX - x) / 20;
-
-                element.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-5px)`;
-            });
-
-            element.addEventListener('mouseleave', () => {
-                element.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0)';
-            });
+            const wordCard = e.target.closest('.word-card[data-word]');
+            if (wordCard) speak(wordCard.dataset.word);
         });
 
-        // 为标题添加鼠标跟随效果
-        const titles = document.querySelectorAll('.title-animate');
-        titles.forEach(title => {
-            title.addEventListener('mousemove', (e) => {
-                const rect = title.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-
-                const centerX = rect.width / 2;
-                const centerY = rect.height / 2;
-
-                const moveX = (x - centerX) / 30;
-                const moveY = (y - centerY) / 30;
-
-                title.style.textShadow = `${moveX}px ${moveY}px 8px rgba(34, 197, 94, 0.3)`;
-            });
-
-            title.addEventListener('mouseleave', () => {
-                title.style.textShadow = 'none';
-            });
+        // 键盘支持
+        document.addEventListener('keydown', function (e) {
+            if (e.key !== 'Enter' && e.key !== ' ') return;
+            const t = e.target;
+            if (t.classList.contains('word-card') && t.dataset.word) {
+                e.preventDefault();
+                speak(t.dataset.word);
+            }
         });
+
+        // ── 鼠标光晕（节流版） ──
+        const cursorGlow = document.getElementById('cursorGlow');
+        let mouseX = 0, mouseY = 0, glowX = 0, glowY = 0, rafId = 0;
+
+        document.addEventListener('mousemove', function (e) {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            if (!rafId) {
+                rafId = requestAnimationFrame(function loop() {
+                    rafId = 0;
+                    const dx = mouseX - glowX, dy = mouseY - glowY;
+                    glowX += dx * 0.1;
+                    glowY += dy * 0.1;
+                    if (Math.abs(dx) > 0.5 || Math.abs(dy) > 0.5) {
+                        cursorGlow.style.left = glowX + 'px';
+                        cursorGlow.style.top = glowY + 'px';
+                        rafId = requestAnimationFrame(loop);
+                    }
+                });
+            }
+        });
+
+        // ── 3D 倾斜 & 标题阴影（事件委托 + 节流） ──
+        let tiltRaf = 0;
+        document.addEventListener('mousemove', function (e) {
+            if (tiltRaf) return;
+            tiltRaf = requestAnimationFrame(function () {
+                tiltRaf = 0;
+                processTilt(e);
+            });
+        }, { passive: true });
+
+        const tiltTargets = '.content-card, .word-card, .grammar-card, .title-animate';
+        function processTilt(e) {
+            const hovered = document.querySelector(tiltTargets + ':hover');
+            if (!hovered) return;
+            const rect = hovered.getBoundingClientRect();
+            const x = e.clientX - rect.left, y = e.clientY - rect.top;
+            const cx = rect.width / 2, cy = rect.height / 2;
+
+            if (hovered.classList.contains('title-animate')) {
+                hovered.style.textShadow = `${(x - cx) / 30}px ${(y - cy) / 30}px 8px rgba(34,197,94,0.3)`;
+            } else {
+                hovered.style.transform =
+                    `perspective(1000px) rotateX(${(y - cy) / 20}deg) rotateY(${(cx - x) / 20}deg) translateY(-5px)`;
+            }
+        }
+
+        // 鼠标离开时重置
+        document.addEventListener('mouseout', function (e) {
+            const target = e.target.closest(tiltTargets);
+            if (!target) return;
+            if (target.classList.contains('title-animate')) {
+                target.style.textShadow = '';
+            } else {
+                target.style.transform = '';
+            }
+        });
+
+        // ── 初始化 ──
+        buildWordCards();
+        buildQuiz();
+    })();
     </script>
 </body>
 </html>
