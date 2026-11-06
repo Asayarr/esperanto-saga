@@ -1,489 +1,823 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>世界语 Esperanto 交互学习网站</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        :root {
-            --green-50: #f0fdf4;
-            --green-100: #dcfce7;
-            --green-200: #bbf7d0;
-            --green-300: #86efac;
-            --green-400: #4ade80;
-            --green-500: #22c55e;
-            --green-600: #16a34a;
-            --green-700: #15803d;
-            --green-800: #14532d;
-            --green-900: #052e16;
-            --easing: cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>世界语 Esperanto · 一门为沟通而造的语言</title>
+<meta name="description" content="世界语（Esperanto）学习页：字母与发音、十六条官方语法、常用词与短语、运动史与数据，附十题闯关。">
+<style>
+:root{
+  --paper:#FBFAF6;
+  --paper-2:#F4F1E8;
+  --ink:#1B1B1A;
+  --ink-2:#4F4B44;
+  --ink-3:#6B6459;
+  --rule:#E1DCCF;
+  --rule-2:#C8C2B2;
+  --green:#1F6B3B;
+  --green-tint:#EDF3EC;
+  --green-line:#BFD5C4;
+  --serif:Georgia,"Source Han Serif SC","Noto Serif CJK SC","STZhongsong","Songti SC",SimSun,serif;
+  --sans:"Segoe UI","Microsoft YaHei","PingFang SC","Hiragino Sans GB",system-ui,sans-serif;
+  --mono:"Cascadia Mono","JetBrains Mono",Consolas,"Liberation Mono",monospace;
+  --ease:cubic-bezier(.2,.6,.2,1);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:var(--sans);font-size:16.5px;line-height:1.85;
+  text-wrap:pretty;-webkit-font-smoothing:antialiased;
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *{transition-duration:.01ms!important;animation-duration:.01ms!important}
+}
+a{color:var(--green);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}
+a:hover{text-decoration:none}
+:focus-visible{outline:2px solid var(--green);outline-offset:3px}
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+/* 顶栏 */
+.skip{position:absolute;left:-9999px;top:0;background:var(--ink);color:var(--paper);padding:8px 14px;font-size:13px;z-index:100}
+.skip:focus{left:8px;top:8px}
+.topbar{position:sticky;top:0;z-index:50;background:rgba(251,250,246,.95);backdrop-filter:blur(6px)}
+.topbar .in{max-width:1100px;margin:0 auto;padding:0 28px;height:54px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+.brand{font-family:var(--serif);font-size:16.5px;letter-spacing:.02em;color:var(--ink);text-decoration:none;white-space:nowrap}
+.brand em{font-style:normal;color:var(--green);margin-left:.35em}
+.topnav{display:flex;gap:20px;font-size:13px;overflow-x:auto;scrollbar-width:none}
+.topnav::-webkit-scrollbar{display:none}
+.topnav a{color:var(--ink-2);text-decoration:none;white-space:nowrap;padding:4px 0;border-bottom:1px solid transparent;transition:color .16s,border-color .16s}
+.topnav a:hover{color:var(--ink);border-bottom-color:var(--rule-2)}
+.topnav a.active{color:var(--ink);border-bottom-color:var(--ink)}
+.pbar{height:1px;background:var(--rule)}
+.pbar i{display:block;height:100%;background:var(--green);transform:scaleX(0);transform-origin:left;-webkit-transform-origin:left}
 
-        body {
-            background: linear-gradient(135deg, var(--green-50) 0%, var(--green-100) 25%, var(--green-200) 50%, var(--green-300) 75%, var(--green-400) 100%);
-            background-attachment: fixed;
-            min-height: 100vh;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            overflow-x: hidden;
-        }
+/* 布局 */
+.page{max-width:1100px;margin:0 auto;padding:0 28px;display:grid;grid-template-columns:176px minmax(0,720px);gap:0 56px;align-items:start}
+.content{grid-column:2;min-width:0}
+.toc{position:sticky;top:88px;padding-top:78px;font-size:13px}
+.toc p{margin:0 0 12px;font-size:11.5px;letter-spacing:.14em;color:var(--ink-3)}
+.toc ol{list-style:none;margin:0;padding:0}
+.toc a{display:block;padding:6px 0 6px 12px;color:var(--ink-3);text-decoration:none;border-left:1px solid var(--rule);line-height:1.55;transition:color .16s,border-color .16s}
+.toc a:hover{color:var(--ink)}
+.toc a.active{color:var(--ink);border-left:2px solid var(--green);padding-left:11px}
+.toc .n{font-family:var(--mono);font-size:11px;color:var(--ink-3);margin-right:7px;font-variant-numeric:tabular-nums}
+@media (max-width:1019px){
+  .page{display:block;max-width:760px}
+  .toc{display:none}
+}
 
-        .cursor-glow {
-            position: fixed;
-            width: 350px;
-            height: 350px;
-            background: radial-gradient(circle, rgba(34,197,94,0.25) 0%, rgba(74,222,128,0.1) 50%, transparent 70%);
-            border-radius: 50%;
-            pointer-events: none;
-            transform: translate(-50%, -50%);
-            z-index: 0;
-            will-change: left, top;
-        }
+/* 刊头 */
+.masthead{padding:64px 0 0}
+.kicker{margin:0 0 22px;font-size:11.5px;letter-spacing:.18em;color:var(--ink-3);text-transform:uppercase}
+h1{margin:0;font-family:var(--serif);font-weight:400;font-size:clamp(40px,6.2vw,62px);line-height:1.16;letter-spacing:.01em}
+h1 .latin{display:block;font-size:.5em;color:var(--green);letter-spacing:.03em;margin-top:.14em}
+.mast-grid{display:grid;grid-template-columns:minmax(0,1fr) 236px;gap:44px;align-items:start;margin-top:34px}
+.lead{margin:0;font-family:var(--serif);font-size:19.5px;line-height:1.92;color:var(--ink)}
+.lead strong{font-weight:700;color:var(--ink)}
+.fig{margin:0}
+.fig img{display:block;width:100%;height:auto;border:1px solid var(--rule-2);filter:saturate(.94)}
+.fig figcaption{margin-top:9px;font-size:12px;line-height:1.65;color:var(--ink-3)}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--ink);margin:44px 0 0}
+.mast-grid .stats{grid-column:1 / -1}
+.stat{padding:13px 16px 0 0}
+.stat b{display:block;font-family:var(--serif);font-weight:400;font-size:25px;line-height:1.25;font-variant-numeric:tabular-nums}
+.stat span{display:block;font-size:12.5px;color:var(--ink-3);margin-top:3px;line-height:1.5}
+@media (max-width:820px){
+  .mast-grid{grid-template-columns:1fr;gap:28px}
+  .fig{max-width:236px;order:3}
+  .mast-grid .stats{order:2;margin-top:8px;grid-template-columns:repeat(2,1fr);row-gap:16px}
+}
 
-        nav {
-            background: linear-gradient(135deg, rgba(34,197,94,0.95) 0%, rgba(22,163,74,0.95) 100%);
-            backdrop-filter: blur(10px);
-            transition: box-shadow 0.3s ease;
-        }
-        nav:hover { box-shadow: 0 8px 32px rgba(34,197,94,0.3); }
+/* 章节 */
+.sec{padding-top:76px;margin-top:76px;border-top:1px solid var(--rule)}
+.sec-head{margin-bottom:26px}
+.sec-num{margin:0 0 10px;font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;color:var(--green);font-variant-numeric:tabular-nums}
+h2{margin:0;font-family:var(--serif);font-weight:400;font-size:clamp(25px,3.2vw,31px);line-height:1.35;letter-spacing:.01em}
+.dek{margin:11px 0 0;font-size:15.5px;line-height:1.85;color:var(--ink-2);max-width:60ch}
+h3{margin:0 0 4px;font-family:var(--serif);font-weight:600;font-size:17.5px;line-height:1.5}
+p{margin:0 0 1.05em}
+.content p:last-child{margin-bottom:0}
+.eo{font-family:var(--serif);color:var(--green)}
+.note{margin:26px 0;padding-top:11px;border-top:1px solid var(--rule-2);max-width:58ch;font-size:13.5px;line-height:1.78;color:var(--ink-3)}
+.note b{color:var(--ink-2);font-weight:600}
+.note .tag{display:inline-block;margin-right:8px;font-size:11.5px;letter-spacing:.12em;color:var(--ink-3);border:1px solid var(--rule-2);padding:1px 6px;vertical-align:1px}
+blockquote{margin:24px 0;padding:0 0 0 20px;border-left:1px solid var(--rule-2);font-family:var(--serif);font-size:17.5px;line-height:1.8;color:var(--ink-2)}
 
-        .nav-btn {
-            position: relative;
-            transition: all 0.3s var(--easing);
-            overflow: hidden;
-            padding: 0.25rem 0.5rem;
-            border-radius: 0.25rem;
-            background: none;
-            border: none;
-            color: white;
-            cursor: pointer;
-            font-size: inherit;
-        }
-        .nav-btn::before {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            width: 0;
-            height: 2px;
-            background: white;
-            transition: width 0.3s ease;
-            transform: translateX(-50%);
-        }
-        .nav-btn:hover::before { width: 100%; }
-        .nav-btn:hover { transform: translateY(-2px); }
+/* 字母表 */
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:26px 0 0}
+.chip{font:inherit;font-size:12.5px;line-height:1;padding:7px 13px;border:1px solid var(--rule-2);border-radius:1px;background:none;color:var(--ink-2);cursor:pointer;transition:color .16s,border-color .16s,background .16s}
+.chip:hover{color:var(--ink);border-color:var(--ink-3)}
+.chip[aria-pressed="true"]{background:var(--paper-2);border-color:var(--ink);color:var(--ink)}
+.abc{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));border-top:1px solid var(--rule-2);border-left:1px solid var(--rule-2);margin-top:20px}
+.abc-cell{border-right:1px solid var(--rule-2);border-bottom:1px solid var(--rule-2);padding:12px 10px 13px;transition:opacity .2s var(--ease)}
+.abc-cell .l{display:block;font-family:var(--serif);font-size:23px;line-height:1.15}
+.abc-cell .ipa{display:block;margin-top:5px;font-family:var(--mono);font-size:11.5px;line-height:1.4;color:var(--green)}
+.abc-cell .hint{display:block;margin-top:2px;font-size:11.5px;line-height:1.5;color:var(--ink-3)}
+.abc.filtered .abc-cell{opacity:.24}
+.abc.filtered .abc-cell.on{opacity:1}
+@media (max-width:700px){
+  .abc{grid-template-columns:repeat(4,minmax(0,1fr))}
+}
+.dl{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--rule-2);border:1px solid var(--rule-2);margin-top:22px}
+.dl div{background:var(--paper);padding:11px 13px}
+.dl b{display:block;font-family:var(--serif);font-weight:400;font-size:18px;color:var(--green);line-height:1.4}
+.dl span{display:block;font-size:12.5px;color:var(--ink-3);line-height:1.6}
 
-        .logo-star {
-            transition: transform 0.5s var(--easing);
-            cursor: default;
-        }
-        .logo-star:hover { transform: rotate(180deg) scale(1.2); }
+/* 规则 */
+.group-label{margin:32px 0 0;font-size:11.5px;letter-spacing:.14em;color:var(--ink-3)}
+.rules{margin:10px 0 0;border-top:1px solid var(--rule)}
+.rule{display:grid;grid-template-columns:34px minmax(0,1fr);gap:0 16px;padding:16px 0;border-bottom:1px solid var(--rule)}
+.rule-n{font-family:var(--mono);font-size:12px;line-height:1.9;color:var(--green);font-variant-numeric:tabular-nums}
+.rule p{margin:0;font-size:15px;line-height:1.8;color:var(--ink-2)}
+.rule .eg{margin-top:7px;font-size:14.5px;line-height:1.7;color:var(--ink)}
+.rule .eg i{font-style:normal;font-family:var(--serif);font-size:16px;color:var(--green)}
+.rule .eg span{color:var(--ink-3);font-size:13.5px}
 
-        .content-card, .grammar-card {
-            background: linear-gradient(145deg, rgba(255,255,255,0.95) 0%, rgba(240,253,244,0.9) 100%);
-            border-radius: 20px;
-            box-shadow: 0 4px 20px rgba(34,197,94,0.1);
-            transition: all 0.4s var(--easing);
-            backdrop-filter: blur(10px);
-            will-change: transform;
-        }
-        .content-card:hover {
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 12px 40px rgba(34,197,94,0.2);
-        }
+/* 单词 */
+.words{margin-top:22px;border-top:1px solid var(--rule-2)}
+.word-row{display:grid;grid-template-columns:minmax(110px,1.1fr) 104px minmax(0,1fr) 32px;gap:14px;align-items:center;width:100%;padding:13px 6px;border:0;border-bottom:1px solid var(--rule);background:none;font:inherit;color:inherit;text-align:left;cursor:pointer;transition:background .16s}
+.word-row:hover{background:var(--paper-2)}
+.word-row .w{font-family:var(--serif);font-size:22px;line-height:1.3;color:var(--green)}
+.word-row .ipa{font-family:var(--mono);font-size:12px;color:var(--ink-3);line-height:1.5}
+.word-row .zh{font-size:15px;color:var(--ink);line-height:1.6}
+.word-row .zh em{font-style:normal;color:var(--ink-3);font-size:12.5px;margin-left:8px}
+.play{width:30px;height:30px;display:grid;place-items:center;border:1px solid var(--rule-2);border-radius:1px;transition:border-color .16s}
+.play::before{content:"";width:0;height:0;border-left:7px solid var(--ink);border-top:4.5px solid transparent;border-bottom:4.5px solid transparent;margin-left:2px;transition:border-color .16s}
+.word-row:hover .play{border-color:var(--ink-3)}
+.word-row.is-playing .w{text-decoration:underline;text-decoration-color:var(--green-line);text-underline-offset:6px;text-decoration-thickness:2px}
+.word-row.is-playing .play{border-color:var(--green)}
+.word-row.is-playing .play::before{border-left:8px solid var(--green);border-top:4.5px solid transparent;border-bottom:4.5px solid transparent}
+.hint-line{margin:14px 0 0;font-size:12.5px;color:var(--ink-3)}
+@media (max-width:560px){
+  .word-row{grid-template-columns:1fr 32px;gap:4px 10px;padding:14px 4px}
+  .word-row .ipa{grid-column:1;margin-top:-4px}
+  .word-row .zh{grid-column:1}
+  .word-row .play{grid-column:2;grid-row:1 / span 3}
+}
 
-        .word-card {
-            background: white;
-            border-radius: 16px;
-            padding: 1.5rem;
-            box-shadow: 0 4px 15px rgba(34,197,94,0.1);
-            transition: all 0.3s var(--easing);
-            cursor: pointer;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            will-change: transform;
-        }
-        .word-card::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, rgba(34,197,94,0.1) 0%, transparent 100%);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        .word-card:hover {
-            transform: translateY(-12px) scale(1.08);
-            box-shadow: 0 20px 40px rgba(34,197,94,0.25);
-        }
-        .word-card:hover::before { opacity: 1; }
-        .word-card:active { transform: translateY(-8px) scale(1.05); }
+/* 表格 */
+.tbl-wrap{overflow-x:auto;margin-top:20px}
+.tbl{width:100%;min-width:520px;border-collapse:collapse;text-align:left}
+.tbl th{font-size:11.5px;font-weight:600;letter-spacing:.1em;color:var(--ink-3);border-bottom:1px solid var(--ink);padding:0 14px 8px 0;white-space:nowrap}
+.tbl td{border-bottom:1px solid var(--rule);padding:11px 14px 11px 0;vertical-align:top;font-size:14.5px;line-height:1.7;color:var(--ink-2)}
+.tbl td:first-child{color:var(--ink)}
+.tbl .eo{font-size:17px}
+.tbl .ipa{font-family:var(--mono);font-size:11.5px;color:var(--green);white-space:nowrap}
+.tbl .num{font-family:var(--sans);font-size:14px;font-weight:600;font-variant-numeric:tabular-nums;color:var(--ink);white-space:nowrap}
+.tbl .src{font-size:12px;color:var(--ink-3)}
+.tbl tr:last-child td{border-bottom:1px solid var(--rule-2)}
 
-        .green-btn {
-            background: linear-gradient(135deg, var(--green-500) 0%, var(--green-600) 100%);
-            color: white;
-            padding: 12px 32px;
-            border-radius: 30px;
-            border: none;
-            cursor: pointer;
-            transition: all 0.3s var(--easing);
-            box-shadow: 0 4px 15px rgba(34,197,94,0.3);
-            font-weight: 500;
-            text-decoration: none;
-            display: inline-block;
-        }
-        .green-btn:hover {
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 8px 25px rgba(34,197,94,0.4);
-        }
-        .green-btn:active { transform: translateY(-1px) scale(1.02); }
+/* 闯关 */
+.quiz{margin-top:26px;border-top:1px solid var(--ink);padding-top:20px}
+.quiz-top{display:flex;justify-content:space-between;align-items:baseline;gap:16px;font-size:12px;letter-spacing:.06em;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.quiz-top .num-strong{font-size:12.5px;font-weight:600;font-variant-numeric:tabular-nums;color:var(--ink-2)}
+.bar{height:2px;background:var(--rule);margin:11px 0 28px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--green);transform:scaleX(0);transform-origin:left;-webkit-transform-origin:left;transition:transform .34s var(--ease)}
+.q{margin:0 0 20px;font-family:var(--serif);font-size:20.5px;line-height:1.6}
+.opts{display:grid;gap:8px}
+.opt{display:grid;grid-template-columns:24px minmax(0,1fr) auto;gap:12px;align-items:center;width:100%;padding:12px 14px;border:1px solid var(--rule-2);border-radius:1px;background:none;font:inherit;font-size:15.5px;line-height:1.6;color:var(--ink);text-align:left;cursor:pointer;transition:border-color .16s,background .16s}
+.opt:hover:not(:disabled){border-color:var(--ink-3);background:var(--paper-2)}
+.opt:disabled{cursor:default}
+.opt .k{font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.opt .tag{font-size:11.5px;letter-spacing:.06em;color:var(--green);opacity:0;transition:opacity .16s}
+.opt.is-correct{border-color:var(--green);background:var(--green-tint)}
+.opt.is-correct .tag{opacity:1}
+.opt.is-wrong{background:var(--paper-2);border-color:var(--ink-3)}
+.opt.is-wrong .txt{color:var(--ink-3);text-decoration:line-through;text-decoration-thickness:1px}
+.opt.is-wrong .tag{opacity:1;color:var(--ink-3)}
+.fb{margin:15px 0 0;min-height:3.3em;font-size:14px;line-height:1.8;color:var(--ink-2)}
+.fb b{color:var(--ink);font-weight:600}
+.quiz-foot{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-top:6px;flex-wrap:wrap}
+.best{font-size:12px;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.btn{font:inherit;font-size:14px;padding:10px 24px;border:1px solid var(--ink);border-radius:1px;background:none;color:var(--ink);cursor:pointer;transition:background .16s,color .16s}
+.btn:hover:not(:disabled){background:var(--ink);color:var(--paper)}
+.btn:disabled{opacity:.32;cursor:not-allowed}
+.btn-quiet{border-color:var(--rule-2);color:var(--ink-2)}
+.result{display:grid;grid-template-columns:auto minmax(0,1fr);gap:26px;align-items:center;margin-top:8px}
+.result .score{font-family:var(--serif);font-size:46px;line-height:1;font-variant-numeric:tabular-nums}
+.result .score small{font-size:15px;color:var(--ink-3);margin-left:2px}
+.result p{margin:0 0 10px;font-size:14.5px;color:var(--ink-2)}
+.key-hint{margin:18px 0 0;font-size:12px;color:var(--ink-3)}
+.key-hint kbd{font-family:var(--mono);font-size:11px;border:1px solid var(--rule-2);border-bottom-width:2px;padding:1px 5px;color:var(--ink-2)}
 
-        .quiz-btn {
-            background: white;
-            border: 2px solid #e5e7eb;
-            padding: 12px 20px;
-            border-radius: 12px;
-            transition: all 0.3s var(--easing);
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            will-change: transform;
-        }
-        .quiz-btn::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            background: rgba(34,197,94,0.1);
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            transition: width 0.4s ease, height 0.4s ease;
-        }
-        .quiz-btn:hover::before { width: 300px; height: 300px; }
-        .quiz-btn:hover {
-            border-color: var(--green-500);
-            transform: translateY(-4px) scale(1.02);
-            box-shadow: 0 8px 20px rgba(34,197,94,0.15);
-        }
-        .quiz-btn:active { transform: translateY(-2px) scale(1.01); }
-        .quiz-btn:disabled { cursor: not-allowed; opacity: 0.9; }
+/* 来源与页脚 */
+.src-list{margin:20px 0 0;padding:0;list-style:none;counter-reset:s}
+.src-list li{counter-increment:s;position:relative;padding:11px 0 11px 34px;border-bottom:1px solid var(--rule);font-size:14px;line-height:1.75;color:var(--ink-2)}
+.src-list li::before{content:counter(s,decimal-leading-zero);position:absolute;left:0;top:11px;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.src-list .t{color:var(--ink)}
+.foot{max-width:1100px;margin:0 auto;padding:0 28px}
+.foot .in{border-top:1px solid var(--ink);margin-top:80px;padding:22px 0 72px;display:flex;justify-content:space-between;gap:28px;flex-wrap:wrap;font-size:12.5px;line-height:1.8;color:var(--ink-3)}
+.foot p{margin:0;max-width:60ch}
 
-        .img-container {
-            position: relative;
-            overflow: hidden;
-            border-radius: 20px;
-            transition: all 0.4s var(--easing);
-            will-change: transform;
-        }
-        .img-container:hover {
-            transform: scale(1.05);
-            box-shadow: 0 20px 40px rgba(34,197,94,0.3);
-        }
-        .img-container img { transition: transform 0.4s ease; }
-        .img-container:hover img { transform: scale(1.1); }
+@media (max-width:620px){
+  body{font-size:16px}
+  .page,.foot,.topbar .in{padding-left:18px;padding-right:18px}
+  .masthead{padding-top:44px}
+  .sec{padding-top:56px;margin-top:56px}
+  .topbar .in{height:58px;gap:14px}
+  .brand{font-size:15px}
+  .topnav{gap:16px;font-size:12.5px;-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 36px),transparent);mask-image:linear-gradient(90deg,#000 calc(100% - 36px),transparent);padding-right:6px}
+  .topnav a{padding:10px 0}
+}
 
-        .grammar-card {
-            background: white;
-            border-radius: 16px;
-            padding: 1.5rem;
-            box-shadow: 0 4px 15px rgba(34,197,94,0.1);
-            transition: all 0.4s var(--easing);
-        }
-        .grammar-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 30px rgba(34,197,94,0.2);
-        }
-
-        .floating-leaf {
-            position: fixed;
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, rgba(34,197,94,0.3) 0%, rgba(74,222,128,0.2) 100%);
-            border-radius: 50% 0 50% 0;
-            pointer-events: none;
-            animation: float 8s ease-in-out infinite;
-            z-index: 0;
-        }
-        @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.6; }
-            50% { transform: translateY(-30px) rotate(180deg); opacity: 1; }
-        }
-
-        .title-animate {
-            transition: transform 0.4s var(--easing), text-shadow 0.4s var(--easing);
-        }
-        .title-animate:hover {
-            transform: translateY(-5px) scale(1.02);
-            text-shadow: 2px 2px 8px rgba(34,197,94,0.3);
-        }
-
-        .correct {
-            background: linear-gradient(135deg, #bbf7d0 0%, #86efac 100%) !important;
-            border-color: var(--green-500) !important;
-            animation: pulse 0.5s ease;
-        }
-        .incorrect {
-            background: linear-gradient(135deg, #fecaca 0%, #fca5a5 100%) !important;
-            border-color: #ef4444 !important;
-            animation: shake 0.5s ease;
-        }
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-5px); }
-            75% { transform: translateX(5px); }
-        }
-
-        @media (max-width: 768px) {
-            .cursor-glow { width: 200px; height: 200px; }
-        }
-    </style>
+@media print{
+  .topbar,.toc,.chips,.play,.bar,.quiz-foot,.key-hint,.skip{display:none!important}
+  body{background:#fff;font-size:10.5pt;line-height:1.6}
+  .page{display:block;max-width:none;padding:0}
+  .content{grid-column:auto}
+  .sec{padding-top:22pt;margin-top:22pt}
+  .rule,.word-row,.opt,.src-list li,tr{break-inside:avoid}
+  .fig,.abc{break-inside:avoid}
+  a{color:inherit;text-decoration:none}
+  .fb{min-height:0}
+}
+</style>
 </head>
-<body class="min-h-screen flex flex-col">
-    <div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
+<body>
+<a class="skip" href="#main">跳到正文</a>
 
-    <div class="floating-leaf" style="top:15%;left:5%;animation-delay:0s" aria-hidden="true"></div>
-    <div class="floating-leaf" style="top:45%;right:8%;animation-delay:2s" aria-hidden="true"></div>
-    <div class="floating-leaf" style="bottom:20%;left:12%;animation-delay:4s" aria-hidden="true"></div>
-
-    <nav class="text-white p-4 sticky top-0 z-50 shadow-md" role="navigation" aria-label="主导航">
-        <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-3">
-            <h1 class="text-xl md:text-2xl font-bold flex items-center gap-2 title-animate">
-                <span class="logo-star bg-white text-green-600 w-8 h-8 rounded-full flex items-center justify-center text-sm" aria-hidden="true">★</span>
-                Esperanto 世界语
-            </h1>
-            <div class="flex gap-4 md:gap-6 text-sm md:text-base" id="navButtons">
-                <button class="nav-btn" data-section="home">首页</button>
-                <button class="nav-btn" data-section="learn">基础学习</button>
-                <button class="nav-btn" data-section="game">趣味闯关</button>
-            </div>
-        </div>
+<header class="topbar">
+  <div class="in">
+    <a class="brand" href="#main">世界语<em>Esperanto</em></a>
+    <nav class="topnav" aria-label="章节导航">
+      <a href="#kio">缘起</a>
+      <a href="#alfabeto">字母</a>
+      <a href="#reguloj">规则</a>
+      <a href="#vortoj">单词</a>
+      <a href="#frazoj">短语</a>
+      <a href="#movado">运动</a>
+      <a href="#ludo">闯关</a>
+      <a href="#fontoj">来源</a>
     </nav>
+  </div>
+  <div class="pbar" aria-hidden="true"><i id="pbarFill"></i></div>
+</header>
 
-    <main class="flex-grow relative z-10">
-        <section id="home" class="max-w-7xl mx-auto p-6">
-            <div class="grid md:grid-cols-2 gap-8 items-center mt-6 md:mt-12">
-                <div>
-                    <h2 class="text-3xl md:text-4xl font-bold mb-4 text-green-800 title-animate">欢迎了解<span class="text-green-600">世界语</span></h2>
-                    <p class="text-lg mb-3 text-green-900 leading-relaxed opacity-80">世界语（Esperanto）是由波兰眼科医生<strong class="text-green-700">柴门霍夫（L. L. Zamenhof）</strong>在1887年创立的<strong class="text-green-700">国际辅助语言</strong>，目的是消除不同民族之间的语言隔阂。</p>
-                    <p class="text-lg mb-3 text-green-900 leading-relaxed opacity-80">它的语法<strong class="text-green-700">只有16条规则、无任何例外</strong>，发音完全拼写对应，普通人只需要几十小时就能掌握基础交流能力。</p>
-                    <p class="text-lg mb-8 text-green-900 leading-relaxed opacity-80">目前全球有超过1000万世界语使用者，遍布100多个国家和地区，每年都会举办国际世界语大会（UK）。</p>
-                    <div class="flex flex-wrap gap-4">
-                        <button class="green-btn" data-section="learn">📚 开始学习</button>
-                        <a href="https://www.chinaesperantoligo.com.cn/esperanto" target="_blank" rel="noopener" class="green-btn">🌍 中华全国世界语协会</a>
-                    </div>
-                </div>
-                <div class="flex flex-col items-center md:items-end gap-4">
-                    <div class="img-container border-4 border-white shadow-xl">
-                        <img src="zamenhof.jpg" alt="柴门霍夫 世界语创始人" class="w-full max-w-[240px] md:max-w-[300px] rounded-2xl object-cover">
-                    </div>
-                    <p class="text-sm text-green-700 italic text-center md:text-right">L. L. Zamenhof (1859-1917)</p>
-                </div>
+<div class="page">
+  <nav class="toc" aria-label="目录">
+    <p>目录</p>
+    <ol>
+      <li><a href="#kio"><span class="n">01</span>缘起</a></li>
+      <li><a href="#alfabeto"><span class="n">02</span>字母与发音</a></li>
+      <li><a href="#reguloj"><span class="n">03</span>十六条规则</a></li>
+      <li><a href="#vortoj"><span class="n">04</span>八个词</a></li>
+      <li><a href="#frazoj"><span class="n">05</span>常用短语</a></li>
+      <li><a href="#movado"><span class="n">06</span>运动与数据</a></li>
+      <li><a href="#ludo"><span class="n">07</span>十题闯关</a></li>
+      <li><a href="#fontoj"><span class="n">08</span>来源</a></li>
+    </ol>
+  </nav>
+
+  <main class="content" id="main">
+
+    <div class="masthead">
+      <p class="kicker">Lingvo internacia · 国际辅助语言</p>
+      <h1>世界语<span class="latin">Esperanto</span></h1>
+      <div class="mast-grid">
+        <div>
+          <p class="lead">1887 年 7 月 26 日，华沙出版了一本四十页左右的俄语小册子，署名"希望者博士"。<strong>它提出的不是一种新的民族语言，而是一门谁都不吃亏的第二语言</strong>：不属于任何国家，规则尽量少，发音怎么写就怎么读。作者是眼科医生拉扎鲁·路德维克·柴门霍夫，他给这门语言留下的名字，是笔名里的那个词——Esperanto。</p>
+        </div>
+        <figure class="fig">
+          <img src="zamenhof.jpg" alt="柴门霍夫（L. L. Zamenhof）彩色化肖像，胸前佩戴绿星徽章" width="536" height="536">
+          <figcaption>L. L. Zamenhof（1859–1917），彩色化历史肖像。胸前的绿星（La Verda Stelo）后来成为世界语运动的标志。</figcaption>
+        </figure>
+        <div class="stats">
+          <div class="stat"><b>1887</b><span>《第一本书》在华沙出版</span></div>
+          <div class="stat"><b>28</b><span>个字母，一字母一音</span></div>
+          <div class="stat"><b>16</b><span>条官方语法，至今不可改</span></div>
+          <div class="stat"><b>6万–200万</b><span>使用者估计（口径不同）</span></div>
+        </div>
+      </div>
+    </div>
+
+    <section class="sec" id="kio">
+      <div class="sec-head">
+        <p class="sec-num">01</p>
+        <h2>缘起：一门语言为什么被造出来</h2>
+        <p class="dek">柴门霍夫在比亚韦斯托克长大。那是一座波兰人、犹太人、俄国人、德国人混居的城市，几套语言彼此听不懂，误会和敌意就从这里长出来。他的判断很朴素：语言不通不是在制造分歧，而是在放大分歧。</p>
+      </div>
+      <p>他最初的方案叫 <span class="eo">la lingvo internacia</span>（国际语）。定位写得很清楚：它不取代任何人的母语，只做公共场合的第二语言；不属于哪个民族，因此每个使用者都不必在"说谁的语言"上做让步。读者很快改用他笔名的那个称呼——<span class="eo">Doktoro Esperanto</span>，希望者博士，语言也就被叫作 Esperanto。</p>
+      <p>为此他做了两件事。一是把语法压到最低：词性靠词尾区分，时态只有六个词尾，没有不规则变化。二是把构词做成积木：一个词根加上前后缀，就能长出一族词——<span class="eo">patro</span>（父亲）加女性后缀 <span class="eo">-in-</span> 就是 <span class="eo">patrino</span>（母亲），再加 <span class="eo">ge-</span> 就是 <span class="eo">gepatroj</span>（父母）。学词根比背单词省力，代价是你要习惯"现场造词"。</p>
+      <blockquote>规则少不难，难的是让人相信：一门没有国土、没有军队的语言，值得学。</blockquote>
+      <p>1887 年那本小册子之后，语言本身几乎没再改过。1905 年，第一届世界语大会在法国布洛涅召开，《世界语基础》（<span class="eo">Fundamento de Esperanto</span>）被确定下来，并附了一条今天听起来很硬的规矩：<strong>任何人都不得改动它</strong>。词汇可以增加，语法不能重写。</p>
+      <aside class="note"><span class="tag">注</span><b>关于"几十小时就能学会"。</b>这个说法常被引用，它大致指"能开口的入门时间"，而不是达到某种语言水平所需的总时长。世界语上手确实快，语法例外少、拼读一致；但词汇量、语感和真实交流仍然要花时间。</aside>
+    </section>
+
+    <section class="sec" id="alfabeto">
+      <div class="sec-head">
+        <p class="sec-num">02</p>
+        <h2>字母与发音：怎么写就怎么读</h2>
+        <p class="dek">28 个字母，每个字母一个固定读音，没有不发音的字母，也没有一个读音对应多种拼写的麻烦。这是世界语最容易上手的部分，也是它最不像"外语"的部分。</p>
+      </div>
+
+      <div class="chips" role="group" aria-label="按类别筛选字母">
+        <button class="chip" type="button" data-filter="all" aria-pressed="true">全部 28</button>
+        <button class="chip" type="button" data-filter="vowel" aria-pressed="false">元音 5</button>
+        <button class="chip" type="button" data-filter="hat" aria-pressed="false">带帽字母 6</button>
+        <button class="chip" type="button" data-filter="cons" aria-pressed="false">辅音 23</button>
+      </div>
+
+      <div class="abc" id="alphabet">
+        <div class="abc-cell" data-group="vowel" title="amiko 朋友"><span class="l">a</span><span class="ipa">/a/</span><span class="hint">如"啊"</span></div>
+        <div class="abc-cell" data-group="cons" title="bela 美的"><span class="l">b</span><span class="ipa">/b/</span><span class="hint">如"波"</span></div>
+        <div class="abc-cell" data-group="cons" title="celo 目标"><span class="l">c</span><span class="ipa">/ts/</span><span class="hint">如"次"</span></div>
+        <div class="abc-cell" data-group="hat" title="ĉielo 天空"><span class="l">ĉ</span><span class="ipa">/tʃ/</span><span class="hint">如"吃"</span></div>
+        <div class="abc-cell" data-group="cons" title="diri 说"><span class="l">d</span><span class="ipa">/d/</span><span class="hint">如"得"</span></div>
+        <div class="abc-cell" data-group="vowel" title="egala 相等的"><span class="l">e</span><span class="ipa">/e/</span><span class="hint">如"诶"</span></div>
+        <div class="abc-cell" data-group="cons" title="facila 容易的"><span class="l">f</span><span class="ipa">/f/</span><span class="hint">如"夫"</span></div>
+        <div class="abc-cell" data-group="cons" title="gaja 快活的"><span class="l">g</span><span class="ipa">/g/</span><span class="hint">如"格"</span></div>
+        <div class="abc-cell" data-group="hat" title="ĝusta 正确的"><span class="l">ĝ</span><span class="ipa">/dʒ/</span><span class="hint">如"吉"</span></div>
+        <div class="abc-cell" data-group="cons" title="hela 明亮的"><span class="l">h</span><span class="ipa">/h/</span><span class="hint">如"喝"</span></div>
+        <div class="abc-cell" data-group="hat" title="eĥo 回声"><span class="l">ĥ</span><span class="ipa">/x/</span><span class="hint">喉音"赫"</span></div>
+        <div class="abc-cell" data-group="vowel" title="ideo 想法"><span class="l">i</span><span class="ipa">/i/</span><span class="hint">如"衣"</span></div>
+        <div class="abc-cell" data-group="cons" title="juna 年轻的"><span class="l">j</span><span class="ipa">/j/</span><span class="hint">如"耶"</span></div>
+        <div class="abc-cell" data-group="hat" title="ĵus 刚刚"><span class="l">ĵ</span><span class="ipa">/ʒ/</span><span class="hint">如"日"（软）</span></div>
+        <div class="abc-cell" data-group="cons" title="kara 亲爱的"><span class="l">k</span><span class="ipa">/k/</span><span class="hint">如"克"</span></div>
+        <div class="abc-cell" data-group="cons" title="longa 长的"><span class="l">l</span><span class="ipa">/l/</span><span class="hint">如"勒"</span></div>
+        <div class="abc-cell" data-group="cons" title="mano 手"><span class="l">m</span><span class="ipa">/m/</span><span class="hint">如"姆"</span></div>
+        <div class="abc-cell" data-group="cons" title="nova 新的"><span class="l">n</span><span class="ipa">/n/</span><span class="hint">如"恩"</span></div>
+        <div class="abc-cell" data-group="vowel" title="ofta 常见的"><span class="l">o</span><span class="ipa">/o/</span><span class="hint">如"哦"</span></div>
+        <div class="abc-cell" data-group="cons" title="peni 努力"><span class="l">p</span><span class="ipa">/p/</span><span class="hint">如"泼"</span></div>
+        <div class="abc-cell" data-group="cons" title="ruĝa 红的"><span class="l">r</span><span class="ipa">/r/</span><span class="hint">舌尖颤音</span></div>
+        <div class="abc-cell" data-group="cons" title="suno 太阳"><span class="l">s</span><span class="ipa">/s/</span><span class="hint">如"丝"</span></div>
+        <div class="abc-cell" data-group="hat" title="ŝipo 船"><span class="l">ŝ</span><span class="ipa">/ʃ/</span><span class="hint">如"诗"</span></div>
+        <div class="abc-cell" data-group="cons" title="tempo 时间"><span class="l">t</span><span class="ipa">/t/</span><span class="hint">如"特"</span></div>
+        <div class="abc-cell" data-group="vowel" title="utila 有用的"><span class="l">u</span><span class="ipa">/u/</span><span class="hint">如"乌"</span></div>
+        <div class="abc-cell" data-group="hat" title="aŭto 汽车"><span class="l">ŭ</span><span class="ipa">/w/</span><span class="hint">半元音 w</span></div>
+        <div class="abc-cell" data-group="cons" title="veni 来"><span class="l">v</span><span class="ipa">/v/</span><span class="hint">唇齿 v</span></div>
+        <div class="abc-cell" data-group="cons" title="zorgi 关心"><span class="l">z</span><span class="ipa">/z/</span><span class="hint">浊"兹"</span></div>
+      </div>
+      <p class="hint-line">中文近似只作参照，实际口型以 IPA 为准；字母格悬停可看例词。</p>
+
+      <div class="dl">
+        <div><b>aj</b><span>如"爱"，kaj 和</span></div>
+        <div><b>ej</b><span>如"诶"，plej 最</span></div>
+        <div><b>oj</b><span>如"哦-衣"，lingvoj 语言</span></div>
+        <div><b>uj</b><span>一口气的"乌-衣"，ĉiuj 全部</span></div>
+        <div><b>aŭ</b><span>如"奥"，ĉirkaŭ 大约</span></div>
+        <div><b>eŭ</b><span>如"诶-乌"，Eŭropo 欧洲</span></div>
+      </div>
+
+      <p style="margin-top:26px">三条通用规则值得先记住：<strong>重音永远落在倒数第二个音节</strong>（<span class="eo">fa-MI-li-o</span>、<span class="eo">es-pe-RAN-to</span>）；<span class="eo">ŭ</span> 只出现在元音之后，从不单独起头；打字不方便的旧键盘可以用 <span class="eo">ch, gh, hh, jh, sh, u</span> 替代带帽字母，这是 1905 年就允许的写法。</p>
+
+      <aside class="note"><span class="tag">注</span><b>ĥ 是个例外。</b>它在现代世界语里很少见，日常写作中常被 <span class="eo">k</span> 或 <span class="eo">h</span> 取代。学发音时知道它存在即可，不必花时间练。</aside>
+    </section>
+
+    <section class="sec" id="reguloj">
+      <div class="sec-head">
+        <p class="sec-num">03</p>
+        <h2>十六条官方规则</h2>
+        <p class="dek">这十六条出自 1905 年的《世界语基础》，是官方核心，也是唯一不可修改的部分。前八条管词类，后八条管通则。</p>
+      </div>
+
+      <p class="group-label">词类 · 规则 01–08</p>
+      <div class="rules">
+        <div class="rule"><div class="rule-n">01</div><div><h3>只有定冠词</h3><p>冠词只有一个 <span class="eo">la</span>，相当于 the，不分性、数、格；没有不定冠词，<span class="eo">domo</span> 就是"一所房子"。初学者甚至可以先用不带冠词的句子。</p><p class="eg"><i>la patro</i> <span>那位父亲</span></p></div></div>
+        <div class="rule"><div class="rule-n">02</div><div><h3>名词以 -o 结尾</h3><p>复数加 <span class="eo">-j</span>，宾格加 <span class="eo">-n</span>；只有主格与宾格两个格，其余关系交给介词。</p><p class="eg"><i>patro · patroj · patron</i> <span>父亲 · 父亲们 · 父亲（宾语）</span></p></div></div>
+        <div class="rule"><div class="rule-n">03</div><div><h3>形容词以 -a 结尾</h3><p>形容词跟着名词一起变数、变格；比较级用 <span class="eo">pli … ol</span>，最高级用 <span class="eo">plej</span>。</p><p class="eg"><i>belaj domoj · pli blanka ol neĝo</i> <span>漂亮的房子们 · 比雪更白</span></p></div></div>
+        <div class="rule"><div class="rule-n">04</div><div><h3>数词直接拼接</h3><p>基础词是 <span class="eo">unu du tri kvar kvin ses sep ok naŭ dek cent mil</span>，大数靠组合；后缀 <span class="eo">-obl-</span> 表倍数、<span class="eo">-on-</span> 表分数、<span class="eo">-op-</span> 表集合，<span class="eo">po</span> 表分配。</p><p class="eg"><i>kvincent tridek tri · po kvin</i> <span>533 · 每份五个</span></p></div></div>
+        <div class="rule"><div class="rule-n">05</div><div><h3>人称代词</h3><p><span class="eo">mi vi li ŝi ĝi si ni ili oni</span>；加 <span class="eo">-a</span> 变物主代词，加 <span class="eo">-n</span> 变宾格。</p><p class="eg"><i>mia · min · oni diras</i> <span>我的 · 我（宾语）· 人们说</span></p></div></div>
+        <div class="rule"><div class="rule-n">06</div><div><h3>动词不变人称</h3><p>六个词尾管全部时态：<span class="eo">-i</span> 不定式、<span class="eo">-as</span> 现在、<span class="eo">-is</span> 过去、<span class="eo">-os</span> 将来、<span class="eo">-us</span> 虚拟、<span class="eo">-u</span> 命令或祈愿；六个分词词尾 <span class="eo">-ant- -int- -ont- -at- -it- -ot-</span> 分管主动与被动。被动语态是 <span class="eo">esti</span> 加被动分词，施动者用 <span class="eo">de</span>。</p><p class="eg"><i>mi amas · mi amis · mi amos · ŝi estas amata de ĉiuj</i> <span>我爱 · 我爱过 · 我将爱 · 她被所有人爱着</span></p></div></div>
+        <div class="rule"><div class="rule-n">07</div><div><h3>副词以 -e 结尾</h3><p>比较方式与形容词相同。</p><p class="eg"><i>mia frato kantas pli bone ol mi</i> <span>我哥哥唱得比我好</span></p></div></div>
+        <div class="rule"><div class="rule-n">08</div><div><h3>介词后接主格</h3><p>介词后面一律用基本形式，不加 <span class="eo">-n</span>；表示方向的例外见第 13 条。</p><p class="eg"><i>kun la patro · al la patro</i> <span>和父亲一起 · 给父亲</span></p></div></div>
+      </div>
+
+      <p class="group-label">通则 · 规则 09–16</p>
+      <div class="rules">
+        <div class="rule"><div class="rule-n">09</div><div><h3>怎么写就怎么读</h3><p>每个字母只有一个读音，没有不发音的字母，也没有含糊的连读。</p><p class="eg"><i>Esperanto</i> <span>字母逐一发音，重音在 -ran-</span></p></div></div>
+        <div class="rule"><div class="rule-n">10</div><div><h3>重音在倒数第二音节</h3><p>没有例外，也不需要标注重音符号。</p><p class="eg"><i>fa-mi-li-o · es-pe-ran-to</i> <span>重音在倒数第二个音节：fa-MI-li-o</span></p></div></div>
+        <div class="rule"><div class="rule-n">11</div><div><h3>合成词直接拼接</h3><p>词素连写，主词放在最后。</p><p class="eg"><i>vaporŝipo</i> <span>vapor- 蒸汽 + ŝip- 船 = 轮船</span></p></div></div>
+        <div class="rule"><div class="rule-n">12</div><div><h3>一个否定就够了</h3><p>句子里已有别的否定词时，不再加 <span class="eo">ne</span>；双重否定在世界语里等于肯定。</p><p class="eg"><i>mi neniam vidis · mi nenion vidis</i> <span>我从没见过 · 我什么都没看见</span></p></div></div>
+        <div class="rule"><div class="rule-n">13</div><div><h3>方向用 -n 表示</h3><p>表示"向某处"时加 <span class="eo">-n</span>，与"在某处"形成对照。</p><p class="eg"><i>kie? kien? tie tien</i> <span>在哪？往哪？在那 往那</span></p></div></div>
+        <div class="rule"><div class="rule-n">14</div><div><h3>万能介词 je</h3><p>所有介词都有固定含义；找不到合适的那个时，用没有独立含义的 <span class="eo">je</span>。</p><p class="eg"><i>ĝoji je tio · ĝoji tion</i> <span>为那件事高兴（两种写法都对）</span></p></div></div>
+        <div class="rule"><div class="rule-n">15</div><div><h3>外来词只借词根</h3><p>国际词按世界语拼写借入，只借基本词，派生词用世界语词尾自己造。</p><p class="eg"><i>teatro · teatra</i> <span>剧院 · 戏剧的</span></p></div></div>
+        <div class="rule"><div class="rule-n">16</div><div><h3>可以省音</h3><p>名词词尾 <span class="eo">-o</span> 与冠词 <span class="eo">la</span> 的 <span class="eo">-a</span> 可以省略并用撇号代替。今天基本只出现在诗歌和歌词里。</p><p class="eg"><i>de l' mondo</i> <span>世界的（诗歌用法）</span></p></div></div>
+      </div>
+
+      <aside class="note"><span class="tag">注</span><b>"只有十六条规则"是一种流传很广的简化。</b>十六条是官方核心，但它没有涵盖语序、疑问词 <span class="eo">ĉu</span>、四十五个相关词（<span class="eo">kiu, tiu, ĉiu …</span>）、反身代词 <span class="eo">si</span> 的用法，以及 <span class="eo">-ig- / -iĝ-</span> 这类使动与自动的区别。完整的语法参考 PMEG 有几百页。入门先掌握这十六条是对的，但别把"规则少"理解成"没有语法"。</aside>
+    </section>
+
+    <section class="sec" id="vortoj">
+      <div class="sec-head">
+        <p class="sec-num">04</p>
+        <h2>八个词，先开口</h2>
+        <p class="dek">点击任意一行可以播放录音（来自本项目的 audio 目录）。先听重音落在哪，再跟着念。</p>
+      </div>
+      <div class="words" id="words">
+        <button class="word-row" type="button" data-word="saluton" aria-label="播放 saluton，中文意思：你好">
+          <span class="w">saluton</span><span class="ipa">/saˈluton/</span><span class="zh">你好<em>问候</em></span><span class="play" aria-hidden="true"></span>
+        </button>
+        <button class="word-row" type="button" data-word="dankon" aria-label="播放 dankon，中文意思：谢谢">
+          <span class="w">dankon</span><span class="ipa">/ˈdankon/</span><span class="zh">谢谢<em>致谢</em></span><span class="play" aria-hidden="true"></span>
+        </button>
+        <button class="word-row" type="button" data-word="ami" aria-label="播放 ami，中文意思：爱">
+          <span class="w">ami</span><span class="ipa">/ˈami/</span><span class="zh">爱<em>动词</em></span><span class="play" aria-hidden="true"></span>
+        </button>
+        <button class="word-row" type="button" data-word="libro" aria-label="播放 libro，中文意思：书">
+          <span class="w">libro</span><span class="ipa">/ˈlibro/</span><span class="zh">书<em>名词</em></span><span class="play" aria-hidden="true"></span>
+        </button>
+        <button class="word-row" type="button" data-word="domo" aria-label="播放 domo，中文意思：房子">
+          <span class="w">domo</span><span class="ipa">/ˈdomo/</span><span class="zh">房子<em>名词</em></span><span class="play" aria-hidden="true"></span>
+        </button>
+        <button class="word-row" type="button" data-word="akvo" aria-label="播放 akvo，中文意思：水">
+          <span class="w">akvo</span><span class="ipa">/ˈakvo/</span><span class="zh">水<em>名词</em></span><span class="play" aria-hidden="true"></span>
+        </button>
+        <button class="word-row" type="button" data-word="patrino" aria-label="播放 patrino，中文意思：母亲">
+          <span class="w">patrino</span><span class="ipa">/paˈtrino/</span><span class="zh">母亲<em>名词</em></span><span class="play" aria-hidden="true"></span>
+        </button>
+        <button class="word-row" type="button" data-word="patro" aria-label="播放 patro，中文意思：父亲">
+          <span class="w">patro</span><span class="ipa">/ˈpatro/</span><span class="zh">父亲<em>名词</em></span><span class="play" aria-hidden="true"></span>
+        </button>
+      </div>
+      <p class="hint-line" id="audioStatus" aria-live="polite">已备好 8 段录音。点击整行即可播放。</p>
+
+      <aside class="note"><span class="tag">注</span><b>patro 与 patrino 的关系值得记一下。</b>世界语用后缀表示性别：<span class="eo">-in-</span> 表女性，所以 <span class="eo">patro → patrino</span>、<span class="eo">frato → fratino</span>（兄弟 → 姐妹）、<span class="eo">filo → filino</span>（儿子 → 女儿）。这也是"积木式构词"最直观的例子：你只需要记住一半的词。</aside>
+    </section>
+
+    <section class="sec" id="frazoj">
+      <div class="sec-head">
+        <p class="sec-num">05</p>
+        <h2>常用短语</h2>
+        <p class="dek">先用在最有用的地方：打招呼、道谢、听不懂的时候求助。重音照例在倒数第二个音节。</p>
+      </div>
+
+      <h3 style="margin-top:26px">问候与道别</h3>
+      <div class="tbl-wrap">
+        <table class="tbl">
+          <thead><tr><th>世界语</th><th>发音</th><th>中文</th><th>场景</th></tr></thead>
+          <tbody>
+            <tr><td class="eo">Saluton!</td><td class="ipa">/saˈluton/</td><td>你好</td><td>最通用，任何时间</td></tr>
+            <tr><td class="eo">Bonan matenon</td><td class="ipa">/ˈbonan maˈtenon/</td><td>早上好</td><td>上午</td></tr>
+            <tr><td class="eo">Bonan tagon</td><td class="ipa">/ˈbonan ˈtagon/</td><td>日安</td><td>白天</td></tr>
+            <tr><td class="eo">Bonan vesperon</td><td class="ipa">/ˈbonan vesˈperon/</td><td>晚上好</td><td>傍晚之后</td></tr>
+            <tr><td class="eo">Ĝis revido</td><td class="ipa">/dʒis reˈvido/</td><td>再见</td><td>字面：直到再见</td></tr>
+            <tr><td class="eo">Bonan nokton</td><td class="ipa">/ˈbonan ˈnokton/</td><td>晚安</td><td>睡前道别</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 style="margin-top:34px">礼貌与交流</h3>
+      <div class="tbl-wrap">
+        <table class="tbl">
+          <thead><tr><th>世界语</th><th>发音</th><th>中文</th><th>场景</th></tr></thead>
+          <tbody>
+            <tr><td class="eo">Dankon</td><td class="ipa">/ˈdankon/</td><td>谢谢</td><td><span class="eo">danki</span> 感谢 + 宾格 -on</td></tr>
+            <tr><td class="eo">Nedankinde</td><td class="ipa">/nedanˈkinde/</td><td>不客气</td><td>回应道谢</td></tr>
+            <tr><td class="eo">Bonvolu</td><td class="ipa">/bonˈvolu/</td><td>请</td><td><span class="eo">bona</span> 好 + <span class="eo">voli</span> 愿意</td></tr>
+            <tr><td class="eo">Pardonu</td><td class="ipa">/parˈdonu/</td><td>对不起</td><td>道歉、请求重复</td></tr>
+            <tr><td class="eo">Kiel vi fartas?</td><td class="ipa">/ˈkiel vi ˈfartas/</td><td>你好吗？</td><td>字面：你过得怎样</td></tr>
+            <tr><td class="eo">Mi fartas bone, dankon.</td><td class="ipa">/mi ˈfartas ˈbone/</td><td>我很好，谢谢</td><td>标准回答</td></tr>
+            <tr><td class="eo">Mi amas vin.</td><td class="ipa">/mi ˈamas vin/</td><td>我爱你</td><td><span class="eo">ami</span> + 宾格 vin</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 style="margin-top:34px">听不懂的时候</h3>
+      <div class="tbl-wrap">
+        <table class="tbl">
+          <thead><tr><th>世界语</th><th>发音</th><th>中文</th><th>场景</th></tr></thead>
+          <tbody>
+            <tr><td class="eo">Ĉu vi parolas Esperanton?</td><td class="ipa">/tʃu vi paˈrolas espeˈranton/</td><td>你说世界语吗？</td><td><span class="eo">ĉu</span> 引出一般疑问句</td></tr>
+            <tr><td class="eo">Mi ne komprenas.</td><td class="ipa">/mi ne komˈprenas/</td><td>我不明白</td><td>最实用的一句</td></tr>
+            <tr><td class="eo">Bonvolu ripeti.</td><td class="ipa">/bonˈvolu riˈpeti/</td><td>请再说一遍</td><td>没听清</td></tr>
+            <tr><td class="eo">Kiom ĝi kostas?</td><td class="ipa">/ˈkiom dʒi ˈkostas/</td><td>多少钱？</td><td>买东西</td></tr>
+            <tr><td class="eo">Jes / Ne</td><td class="ipa">/jes/ /ne/</td><td>是 / 不是</td><td>最基本的两句</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="sec" id="movado">
+      <div class="sec-head">
+        <p class="sec-num">06</p>
+        <h2>运动、数据与争议</h2>
+        <p class="dek">世界语最容易被讲错的地方是"有多少人在用"。诚实的答案是一个很大的区间：统计口径不同，结果能差三十倍。</p>
+      </div>
+
+      <div class="tbl-wrap">
+        <table class="tbl">
+          <thead><tr><th>指标</th><th>数字</th><th>说明</th><th>来源</th></tr></thead>
+          <tbody>
+            <tr><td>使用者总数（估计）</td><td class="num">6 万 – 200 万</td><td>"会说"的定义从能交流到熟练不等</td><td class="src">Libera Folio 2017 / Ethnologue</td></tr>
+            <tr><td>母语者</td><td class="num">约 1,000 – 2,000</td><td>约一千个家庭把孩子养在双语环境里</td><td class="src">Lindstedt 2006 / Ethnologue 2022</td></tr>
+            <tr><td>国际世界语协会（UEA）个人会员</td><td class="num">4,700</td><td>来自 130 个国家和地区（2023 年）</td><td class="src">UEA 2023 年度报告</td></tr>
+            <tr><td>世界语大会（UK）</td><td class="num">111 届编号</td><td>1905 年起每年一届，实际举办 108 届</td><td class="src">UEA / Wikipedia</td></tr>
+            <tr><td>世界语维基百科</td><td class="num">389,591 条</td><td>各语言版本中约第 38 位</td><td class="src">Wikimedia，2026-10-08</td></tr>
+            <tr><td>多邻国课程学习者</td><td class="num">280 万</td><td>2015 年上线至 2020 年 3 月的累计人数</td><td class="src">Duolingo 数据 / Libera Folio</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p style="margin-top:28px">运动本身也有一些不靠人数的支点。1954 年，联合国教科文组织在蒙得维的亚通过决议，承认世界语在语言与文化理解上的价值；今天它仍是这门语言在国际组织层面最常被引用的文件。更日常的是 <span class="eo">Pasporta Servo</span>：一份由世界语者互相提供免费住宿的名单，目前覆盖 121 个国家的两千四百多位东道主。学一门没有国土的语言，社交网络本身就是它的"领土"。</p>
+
+      <aside class="note"><span class="tag">注</span><b>"一千万使用者"没有可靠出处。</b>这个数字在中文网络和不少入门文章里反复出现，但常见统计给出的区间是六万到两百万，连上限都不到一千万。本文因此不采用它。同样需要小心的是"世界语已被某国列为官方语言"之类的说法——它没有任何国家的官方地位。</aside>
+    </section>
+
+    <section class="sec" id="ludo">
+      <div class="sec-head">
+        <p class="sec-num">07</p>
+        <h2>十题闯关</h2>
+        <p class="dek">题目只考本文出现过的内容。答错会给出解析，做完可以重来；最好成绩会记在这台设备上。</p>
+      </div>
+
+      <div class="quiz">
+        <div class="quiz-top">
+          <span id="quizCount">第 1 题 / 共 10 题</span>
+          <span class="num-strong" id="quizScore">答对 0</span>
+        </div>
+        <div class="bar" aria-hidden="true"><i id="quizBar"></i></div>
+
+        <div id="quizBody" aria-live="polite">
+          <p class="q" id="qText"></p>
+          <div class="opts" id="qOpts"></div>
+          <p class="fb" id="qFeedback"></p>
+          <div class="quiz-foot">
+            <span class="best" id="quizBest">最好成绩：—</span>
+            <button class="btn" type="button" id="nextBtn" disabled>下一题</button>
+          </div>
+        </div>
+
+        <div id="quizResult" hidden>
+          <div class="result">
+            <div class="score"><span id="finalScore">0</span><small>/ 10</small></div>
+            <div>
+              <p id="finalNote"></p>
+              <button class="btn btn-quiet" type="button" id="restartBtn">重新开始</button>
             </div>
-        </section>
+          </div>
+        </div>
 
-        <section id="learn" class="max-w-7xl mx-auto p-6 hidden">
-            <h2 class="text-3xl font-bold mb-6 text-green-800 title-animate">世界语基础学习</h2>
-            <h3 class="text-xl font-semibold mb-4 text-green-700">常用单词</h3>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10" id="wordGrid"></div>
-            <h3 class="text-xl font-semibold mb-4 text-green-700">基础语法规则</h3>
-            <div class="grammar-card">
-                <ul class="list-disc pl-5 space-y-2 text-green-900">
-                    <li>名词全部以-o结尾，复数加-j，宾格加-n：libro(书,单数主格) → libroj(复数主格) → libron(单数宾格)</li>
-                    <li>形容词全部以-a结尾，和所修饰的名词性数一致：bela domo(漂亮的房子) → belaj domoj(漂亮的房子们)</li>
-                    <li>动词原形全部以-i结尾，现在时-as，过去时-is，将来时-os：mi amas(我爱) → mi amis(我爱过) → mi amos(我将爱)</li>
-                    <li>没有不规则变化，所有语法规则16条，没有例外</li>
-                </ul>
-            </div>
-        </section>
+        <p class="key-hint">键盘操作：<kbd>1</kbd>–<kbd>4</kbd> 选择，<kbd>Enter</kbd> 进入下一题。</p>
+      </div>
+    </section>
 
-        <section id="game" class="max-w-7xl mx-auto p-6 hidden">
-            <h2 class="text-3xl font-bold mb-6 text-green-800 title-animate">世界语知识小闯关（10题）</h2>
-            <div id="quizContainer"></div>
-        </section>
-    </main>
+    <section class="sec" id="fontoj">
+      <div class="sec-head">
+        <p class="sec-num">08</p>
+        <h2>来源与延伸</h2>
+        <p class="dek">页面里的年份、规则条文与数字都可以在下面对到出处。数据核对于 2026 年 11 月。</p>
+      </div>
+      <ol class="src-list">
+        <li><span class="t">Akademio de Esperanto，《Fundamento de Esperanto》（1905）英文版语法</span>——十六条规则的官方原文。<a href="https://www.akademio-de-esperanto.org/fundamento/gramatiko_angla.html" target="_blank" rel="noopener">akademio-de-esperanto.org</a></li>
+        <li><span class="t">PMEG，Plena Manlibro de Esperanta Gramatiko</span>——最完整的免费语法参考，作者 Bertilo Wennergren。<a href="https://bertilow.com/pmeg/" target="_blank" rel="noopener">bertilow.com/pmeg</a></li>
+        <li><span class="t">Esperantopedia 数据页与十六条规则解读</span>——本文数字区间的主要依据。<a href="https://esperantopedia.org/about/esperanto-in-numbers" target="_blank" rel="noopener">esperantopedia.org</a></li>
+        <li><span class="t">UEA 2023 年度报告</span>——会员人数与国家分布。<a href="https://uea.org/" target="_blank" rel="noopener">uea.org</a></li>
+        <li><span class="t">Wikipedia：Esperanto / Esperanto orthography / Universal Congress of Esperanto</span>——历史与大会届数。<a href="https://en.wikipedia.org/wiki/Esperanto" target="_blank" rel="noopener">en.wikipedia.org</a></li>
+        <li><span class="t">Ethnologue</span>——母语者与使用者估计。<a href="https://www.ethnologue.com/" target="_blank" rel="noopener">ethnologue.com</a></li>
+        <li><span class="t">中华全国世界语协会</span>——国内的世界语组织与活动。<a href="https://www.chinaesperantoligo.com.cn/esperanto" target="_blank" rel="noopener">chinaesperantoligo.com.cn</a></li>
+      </ol>
+    </section>
 
-    <script>
-    (function () {
-        'use strict';
+    <div class="foot">
+      <div class="in">
+        <p>世界语学习页 · 课程作业改版。录音来自本项目 <span style="font-family:var(--mono);font-size:12px">audio/</span> 目录，肖像为公共领域历史图像的彩色化版本。</p>
+        <p>纸色 <span style="font-family:var(--mono);font-size:12px">#FBFAF6</span> · 墨黑正文 · 单一强调色绿星绿 <span style="font-family:var(--mono);font-size:12px">#1F6B3B</span></p>
+      </div>
+    </div>
 
-        // ── 数据 ──
-        const words = [
-            { eo: 'saluton', zh: '你好' },
-            { eo: 'dankon', zh: '谢谢' },
-            { eo: 'ami', zh: '爱' },
-            { eo: 'libro', zh: '书' },
-            { eo: 'domo', zh: '房子' },
-            { eo: 'akvo', zh: '水' },
-            { eo: 'patrino', zh: '妈妈' },
-            { eo: 'patro', zh: '爸爸' }
-        ];
+  </main>
+</div>
 
-        const quizData = [
-            { q: '世界语中"你好"怎么说？', opts: ['dankon', 'saluton', 'ami', 'akvo'], correct: 1 },
-            { q: '世界语中"谢谢"怎么说？', opts: ['dankon', 'saluton', 'libro', 'domo'], correct: 0 },
-            { q: '世界语名词通常以什么结尾？', opts: ['-a', '-i', '-o', '-n'], correct: 2 },
-            { q: '世界语中"书"怎么说？', opts: ['libro', 'domo', 'akvo', 'ami'], correct: 0 },
-            { q: '世界语的创始人是谁？', opts: ['爱因斯坦', '柴门霍夫', '牛顿', '居里夫人'], correct: 1 },
-            { q: '世界语中"水"怎么说？', opts: ['akvo', 'panjo', 'patro', 'libro'], correct: 0 },
-            { q: '世界语动词现在时以什么结尾？', opts: ['-is', '-as', '-os', '-i'], correct: 1 },
-            { q: '世界语中"妈妈"怎么说？', opts: ['patro', 'panjo', 'ami', 'domo'], correct: 1 },
-            { q: '世界语形容词通常以什么结尾？', opts: ['-o', '-i', '-a', '-j'], correct: 2 },
-            { q: '世界语创立于哪一年？', opts: ['1887年', '1900年', '1859年', '1917年'], correct: 0 }
-        ];
+<script>
+(function(){
+  'use strict';
 
-        // ── 构建 DOM ──
-        function buildWordCards() {
-            const grid = document.getElementById('wordGrid');
-            grid.innerHTML = words.map(({ eo, zh }) =>
-                `<div class="word-card" data-word="${eo}" role="button" tabindex="0" aria-label="${eo} - ${zh}">
-                    <p class="text-2xl font-bold text-green-600">${eo}</p>
-                    <p class="text-green-800">${zh}</p>
-                </div>`).join('');
-        }
+  /* 阅读进度 */
+  var pbar = document.getElementById('pbarFill');
+  var ticking = false;
+  function updateProgress(){
+    var h = document.documentElement;
+    var max = h.scrollHeight - h.clientHeight;
+    var r = max > 0 ? Math.min(1, h.scrollTop / max) : 0;
+    pbar.style.transform = 'scaleX(' + r + ')';
+    ticking = false;
+  }
+  window.addEventListener('scroll', function(){
+    if (!ticking){ ticking = true; requestAnimationFrame(updateProgress); }
+  }, { passive: true });
+  updateProgress();
 
-        function buildQuiz() {
-            const container = document.getElementById('quizContainer');
-            container.innerHTML = quizData.map(({ q, opts, correct }, i) =>
-                `<div class="content-card p-6 max-w-2xl mx-auto mb-6" role="group" aria-label="第${i + 1}题">
-                    <p class="text-lg mb-4 font-semibold text-green-800">第${i + 1}题：${q}</p>
-                    <div class="grid grid-cols-2 gap-3">
-                        ${opts.map((opt, j) =>
-                            `<button class="quiz-btn" data-correct="${j === correct}" aria-label="${opt}">${opt}</button>`
-                        ).join('')}
-                    </div>
-                </div>`).join('');
-        }
+  /* 目录高亮 */
+  var links = Array.prototype.slice.call(document.querySelectorAll('.toc a'));
+  var topLinks = Array.prototype.slice.call(document.querySelectorAll('.topnav a'));
+  var sections = links.map(function(a){ return document.querySelector(a.getAttribute('href')); });
+  function markActive(){
+    var y = window.scrollY + 120, idx = 0;
+    for (var i = 0; i < sections.length; i++){
+      if (sections[i] && sections[i].offsetTop <= y) idx = i;
+    }
+    links.forEach(function(a, i){ a.classList.toggle('active', i === idx); });
+    var current = links[idx] ? links[idx].getAttribute('href') : '';
+    topLinks.forEach(function(a){ a.classList.toggle('active', a.getAttribute('href') === current); });
+  }
+  window.addEventListener('scroll', function(){ requestAnimationFrame(markActive); }, { passive: true });
+  markActive();
 
-        // ── 发音（缓存 Audio 对象） ──
-        const audioCache = {};
-        function speak(word) {
-            if (!audioCache[word]) {
-                audioCache[word] = new Audio(`audio/${word}.ogg`);
-            }
-            const a = audioCache[word];
-            a.currentTime = 0;
-            a.play().catch(() => {});
-        }
+  /* 字母筛选 */
+  var abc = document.getElementById('alphabet');
+  var cells = Array.prototype.slice.call(abc.querySelectorAll('.abc-cell'));
+  var chips = Array.prototype.slice.call(document.querySelectorAll('.chip'));
+  function applyFilter(f){
+    chips.forEach(function(c){ c.setAttribute('aria-pressed', String(c.dataset.filter === f)); });
+    if (f === 'all'){
+      abc.classList.remove('filtered');
+      cells.forEach(function(c){ c.classList.remove('on'); });
+      return;
+    }
+    abc.classList.add('filtered');
+    cells.forEach(function(c){ c.classList.toggle('on', c.dataset.group === f); });
+  }
+  chips.forEach(function(c){
+    c.addEventListener('click', function(){ applyFilter(c.dataset.filter); });
+  });
 
-        // ── 答题（事件委托） ──
-        function handleQuizClick(e) {
-            const btn = e.target.closest('.quiz-btn');
-            if (!btn || btn.disabled) return;
+  /* 单词发音 */
+  var CACHE = {};
+  var activeRow = null;
+  var status = document.getElementById('audioStatus');
+  function stopRow(row){
+    if (!row) return;
+    row.classList.remove('is-playing');
+    row.removeAttribute('aria-current');
+  }
+  function play(word, row){
+    var a = CACHE[word];
+    if (!a){
+      a = CACHE[word] = new Audio('audio/' + word + '.ogg');
+      a.preload = 'auto';
+      a.addEventListener('ended', function(){ stopRow(row); });
+      a.addEventListener('error', function(){
+        stopRow(row);
+        status.textContent = '录音 ' + word + '.ogg 未能加载，请检查 audio 目录。';
+      });
+    }
+    if (activeRow && activeRow !== row) stopRow(activeRow);
+    activeRow = row;
+    row.classList.add('is-playing');
+    row.setAttribute('aria-current', 'true');
+    try { a.currentTime = 0; } catch (e) {}
+    var p = a.play();
+    if (p && p.catch){
+      p.catch(function(){
+        stopRow(row);
+        status.textContent = '浏览器拦住了播放，请再点一次。';
+      });
+    }
+    status.textContent = '正在播放 ' + word + '。';
+  }
+  document.getElementById('words').addEventListener('click', function(e){
+    var row = e.target.closest('.word-row');
+    if (row) play(row.dataset.word, row);
+  });
 
-            const card = btn.closest('.content-card');
-            const buttons = card.querySelectorAll('.quiz-btn');
-            const isCorrect = btn.dataset.correct === 'true';
+  /* 闯关 */
+  var QUIZ = [
+    { q: '世界语中"你好"怎么说？', opts: ['dankon', 'saluton', 'bonan tagon', 'pardonu'], a: 1,
+      why: 'saluton 来自 saluto（问候）加宾格词尾 -on，字面是"问候（给你）"。' },
+    { q: '世界语中"谢谢"怎么说？', opts: ['dankon', 'saluton', 'bonvolu', 'ĝis revido'], a: 0,
+      why: 'danki 是"感谢"，dankon 是它加宾格的固定说法。' },
+    { q: '世界语名词通常以什么结尾？', opts: ['-a', '-i', '-o', '-n'], a: 2,
+      why: '名词以 -o 结尾，复数加 -j，宾格加 -n；-a 是形容词，-i 是动词不定式。' },
+    { q: '世界语中"书"怎么说？', opts: ['libro', 'domo', 'akvo', 'ami'], a: 0,
+      why: 'libro 是书；domo 房子，akvo 水，ami 爱（动词）。' },
+    { q: '世界语的创始人是谁？', opts: ['柴门霍夫', '施莱耶尔', '托尔金', '奥威尔'], a: 0,
+      why: '柴门霍夫（L. L. Zamenhof）1887 年在华沙出版《第一本书》。施莱耶尔是更早的 Volapük 的作者。' },
+    { q: '世界语中"水"怎么说？', opts: ['akvo', 'pano', 'lakto', 'fajro'], a: 0,
+      why: 'akvo 水；pano 面包，lakto 牛奶，fajro 火。' },
+    { q: '世界语动词现在时以什么结尾？', opts: ['-is', '-as', '-os', '-i'], a: 1,
+      why: '三个时态都以 s 收尾：-as 现在、-is 过去、-os 将来；-i 是不定式。' },
+    { q: '世界语中"母亲"怎么说？', opts: ['patro', 'patrino', 'fratino', 'filino'], a: 1,
+      why: 'patro 父亲加女性后缀 -in- 得 patrino；fratino 是姐妹，filino 是女儿。' },
+    { q: '世界语形容词通常以什么结尾？', opts: ['-o', '-i', '-a', '-j'], a: 2,
+      why: '形容词以 -a 结尾，并按名词加 -j（复数）与 -n（宾格）。' },
+    { q: '世界语创立于哪一年？', opts: ['1887 年', '1905 年', '1859 年', '1917 年'], a: 0,
+      why: '1887 年 7 月 26 日《第一本书》在华沙出版；1905 年是《世界语基础》定稿之年，1859 与 1917 是柴门霍夫的生卒年。' }
+  ];
 
-            buttons.forEach(b => b.disabled = true);
+  var BEST_KEY = 'esperanto.ludo.best.v1';
+  var idx = 0, score = 0, answered = false;
+  var qText = document.getElementById('qText');
+  var qOpts = document.getElementById('qOpts');
+  var qFeedback = document.getElementById('qFeedback');
+  var quizBody = document.getElementById('quizBody');
+  var quizResult = document.getElementById('quizResult');
+  var countEl = document.getElementById('quizCount');
+  var scoreEl = document.getElementById('quizScore');
+  var bestEl = document.getElementById('quizBest');
+  var nextBtn = document.getElementById('nextBtn');
+  var barFill = document.getElementById('quizBar');
+  var KEYS = ['A', 'B', 'C', 'D'];
 
-            if (isCorrect) {
-                btn.classList.add('correct');
-            } else {
-                btn.classList.add('incorrect');
-                buttons.forEach(b => {
-                    if (b.dataset.correct === 'true') b.classList.add('correct');
-                });
-            }
-        }
+  function readBest(){
+    try { var v = localStorage.getItem(BEST_KEY); return v === null ? null : parseInt(v, 10); }
+    catch (e) { return null; }
+  }
+  function writeBest(v){
+    try { localStorage.setItem(BEST_KEY, String(v)); } catch (e) {}
+  }
+  function showBest(){
+    var b = readBest();
+    bestEl.textContent = '最好成绩：' + (b === null ? '—' : b + ' / 10');
+  }
 
-        document.getElementById('quizContainer').addEventListener('click', handleQuizClick);
+  function renderQuestion(){
+    var item = QUIZ[idx];
+    answered = false;
+    qText.textContent = '第 ' + (idx + 1) + ' 题：' + item.q;
+    countEl.textContent = '第 ' + (idx + 1) + ' 题 / 共 ' + QUIZ.length + ' 题';
+    scoreEl.textContent = '答对 ' + score;
+    qFeedback.textContent = '';
+    nextBtn.disabled = true;
+    nextBtn.textContent = idx === QUIZ.length - 1 ? '看结果' : '下一题';
+    barFill.style.transform = 'scaleX(' + (idx / QUIZ.length) + ')';
 
-        // ── 导航切换 ──
-        function showSection(id) {
-            document.querySelectorAll('section').forEach(s => s.classList.add('hidden'));
-            document.getElementById(id).classList.remove('hidden');
-        }
+    qOpts.innerHTML = '';
+    item.opts.forEach(function(opt, i){
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'opt';
+      b.dataset.i = String(i);
+      b.innerHTML = '<span class="k">' + KEYS[i] + '</span><span class="txt"></span><span class="tag"></span>';
+      b.querySelector('.txt').textContent = opt;
+      b.addEventListener('click', function(){ choose(i); });
+      qOpts.appendChild(b);
+    });
+  }
 
-        // 导航栏、首页按钮均用事件委托
-        document.addEventListener('click', function (e) {
-            const trigger = e.target.closest('[data-section]');
-            if (trigger) showSection(trigger.dataset.section);
+  function choose(i){
+    if (answered) return;
+    answered = true;
+    var item = QUIZ[idx];
+    var btns = Array.prototype.slice.call(qOpts.querySelectorAll('.opt'));
+    var right = i === item.a;
+    if (right) score++;
 
-            const wordCard = e.target.closest('.word-card[data-word]');
-            if (wordCard) speak(wordCard.dataset.word);
-        });
+    btns.forEach(function(b, k){
+      b.disabled = true;
+      if (k === item.a){
+        b.classList.add('is-correct');
+        b.querySelector('.tag').textContent = '正确答案';
+      } else if (k === i){
+        b.classList.add('is-wrong');
+        b.querySelector('.tag').textContent = '不对';
+      }
+    });
 
-        // 键盘支持
-        document.addEventListener('keydown', function (e) {
-            if (e.key !== 'Enter' && e.key !== ' ') return;
-            const t = e.target;
-            if (t.classList.contains('word-card') && t.dataset.word) {
-                e.preventDefault();
-                speak(t.dataset.word);
-            }
-        });
+    qFeedback.innerHTML = (right ? '<b>答对了。</b>' : '<b>不对。</b>') + item.why;
+    scoreEl.textContent = '答对 ' + score;
+    nextBtn.disabled = false;
+    barFill.style.transform = 'scaleX(' + ((idx + 1) / QUIZ.length) + ')';
+  }
 
-        // ── 鼠标光晕（节流版） ──
-        const cursorGlow = document.getElementById('cursorGlow');
-        let mouseX = 0, mouseY = 0, glowX = 0, glowY = 0, rafId = 0;
+  function next(){
+    if (!answered) return;
+    if (idx === QUIZ.length - 1){ showResult(); return; }
+    idx++;
+    renderQuestion();
+  }
 
-        document.addEventListener('mousemove', function (e) {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-            if (!rafId) {
-                rafId = requestAnimationFrame(function loop() {
-                    rafId = 0;
-                    const dx = mouseX - glowX, dy = mouseY - glowY;
-                    glowX += dx * 0.1;
-                    glowY += dy * 0.1;
-                    if (Math.abs(dx) > 0.5 || Math.abs(dy) > 0.5) {
-                        cursorGlow.style.left = glowX + 'px';
-                        cursorGlow.style.top = glowY + 'px';
-                        rafId = requestAnimationFrame(loop);
-                    }
-                });
-            }
-        });
+  function showResult(){
+    quizBody.hidden = true;
+    quizResult.hidden = false;
+    document.getElementById('finalScore').textContent = String(score);
+    var best = readBest();
+    if (best === null || score > best){ writeBest(score); best = score; }
+    var note;
+    if (score === 10) note = '全对。字母、词尾和几个常用词都已经拿下，可以去看第 05 节的短语表了。';
+    else if (score >= 8) note = '大部分对了。回头看第 03 节第 2、3、6 条，扣分多半在词尾。';
+    else if (score >= 5) note = '及格。建议先把第 02 节的字母表过一遍，再回来做一次。';
+    else note = '别急，先读第 02、03 节，字母和词尾是这套语法的地基。';
+    document.getElementById('finalNote').textContent = note + '（最好成绩 ' + best + ' / 10）';
+    showBest();
+  }
 
-        // ── 3D 倾斜 & 标题阴影（事件委托 + 节流） ──
-        let tiltRaf = 0;
-        document.addEventListener('mousemove', function (e) {
-            if (tiltRaf) return;
-            tiltRaf = requestAnimationFrame(function () {
-                tiltRaf = 0;
-                processTilt(e);
-            });
-        }, { passive: true });
+  function restart(){
+    idx = 0; score = 0;
+    quizResult.hidden = true;
+    quizBody.hidden = false;
+    renderQuestion();
+    showBest();
+  }
 
-        const tiltTargets = '.content-card, .word-card, .grammar-card, .title-animate';
-        function processTilt(e) {
-            const hovered = document.querySelector(tiltTargets + ':hover');
-            if (!hovered) return;
-            const rect = hovered.getBoundingClientRect();
-            const x = e.clientX - rect.left, y = e.clientY - rect.top;
-            const cx = rect.width / 2, cy = rect.height / 2;
+  nextBtn.addEventListener('click', next);
+  document.getElementById('restartBtn').addEventListener('click', restart);
 
-            if (hovered.classList.contains('title-animate')) {
-                hovered.style.textShadow = `${(x - cx) / 30}px ${(y - cy) / 30}px 8px rgba(34,197,94,0.3)`;
-            } else {
-                hovered.style.transform =
-                    `perspective(1000px) rotateX(${(y - cy) / 20}deg) rotateY(${(cx - x) / 20}deg) translateY(-5px)`;
-            }
-        }
+  document.addEventListener('keydown', function(e){
+    if (e.target && /INPUT|TEXTAREA|SELECT/.test(e.target.tagName)) return;
+    if (!quizBody.hidden){
+      if (/^[1-4]$/.test(e.key)){
+        var n = parseInt(e.key, 10) - 1;
+        if (!answered && n < QUIZ[idx].opts.length){ e.preventDefault(); choose(n); }
+      } else if (e.key === 'Enter' && answered && !nextBtn.disabled){
+        e.preventDefault(); next();
+      }
+    }
+  });
 
-        // 鼠标离开时重置
-        document.addEventListener('mouseout', function (e) {
-            const target = e.target.closest(tiltTargets);
-            if (!target) return;
-            if (target.classList.contains('title-animate')) {
-                target.style.textShadow = '';
-            } else {
-                target.style.transform = '';
-            }
-        });
-
-        // ── 初始化 ──
-        buildWordCards();
-        buildQuiz();
-    })();
-    </script>
+  renderQuestion();
+  showBest();
+})();
+</script>
 </body>
 </html>
