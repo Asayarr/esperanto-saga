@@ -201,6 +201,51 @@ blockquote{margin:24px 0;padding:0 0 0 20px;border-left:1px solid var(--rule-2);
 .key-hint{margin:18px 0 0;font-size:12px;color:var(--ink-3)}
 .key-hint kbd{font-family:var(--mono);font-size:11px;border:1px solid var(--rule-2);border-bottom-width:2px;padding:1px 5px;color:var(--ink-2)}
 
+/* 构词引擎 */
+.vf-box{margin-top:30px;border-top:1px solid var(--ink);padding-top:18px}
+.vf-label{margin:0 0 14px;font-size:11.5px;letter-spacing:.14em;color:var(--ink-3)}
+.vf-line{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.vf-input{flex:0 1 300px;min-width:0;font:inherit;font-family:var(--serif);font-size:21px;padding:8px 12px;border:1px solid var(--rule-2);border-radius:1px;background:none;color:var(--green)}
+.vf-input:focus{outline:none;border-color:var(--ink)}
+.vf-out{min-height:96px;padding:20px 0 0}
+.vf-parts{display:flex;align-items:flex-start;flex-wrap:wrap;gap:0 2px}
+.vf-part{padding:0 4px;text-align:center}
+.vf-part .t{display:block;font-family:var(--serif);font-size:27px;line-height:1.2;color:var(--green)}
+.vf-part .z{display:block;font-size:11.5px;line-height:1.5;color:var(--ink-3);margin-top:3px;white-space:nowrap}
+.vf-part.k-pre .t{color:var(--ink-2)}
+.vf-part.k-suf .t{color:var(--ink)}
+.vf-part.k-fin .t{color:var(--ink-3)}
+.vf-plus{font-family:var(--mono);font-size:15px;line-height:2.15;color:var(--rule-2);padding:0 1px}
+.vf-sum{margin:16px 0 0;font-size:14.5px;line-height:1.85;color:var(--ink-2)}
+.vf-sum b{color:var(--ink);font-weight:600}
+.vf-err{margin:0;font-size:14px;line-height:1.8;color:var(--ink-3)}
+.vf-alt{margin:10px 0 0;font-size:12.5px;line-height:1.9;color:var(--ink-3)}
+.vf-alt button{font:inherit;font-size:12.5px;background:none;border:0;border-bottom:1px solid var(--rule-2);color:var(--ink-2);cursor:pointer;padding:0;margin-right:12px}
+.vf-alt button:hover{color:var(--ink);border-bottom-color:var(--ink)}
+.vf-alt button.on{color:var(--green);border-bottom-color:var(--green)}
+.vf-group{margin:0 0 15px}
+.vf-group>span{display:block;font-size:11.5px;letter-spacing:.1em;color:var(--ink-3);margin-bottom:8px}
+.vf-chips{display:flex;flex-wrap:wrap;gap:6px}
+.vf-chip{font:inherit;font-size:13px;line-height:1;padding:7px 9px;border:1px solid var(--rule-2);border-radius:1px;background:none;color:var(--ink-2);cursor:pointer;transition:border-color .16s,background .16s,color .16s}
+.vf-chip:hover:not(:disabled){border-color:var(--ink-3);color:var(--ink)}
+.vf-chip:disabled{opacity:.42;border-color:var(--rule);cursor:not-allowed}
+.vf-chip.on{background:var(--paper-2);color:var(--ink);border-color:var(--ink)}
+.vf-select{font:inherit;font-size:14px;padding:7px 10px;border:1px solid var(--rule-2);border-radius:1px;background:none;color:var(--ink);max-width:100%}
+.vf-select:focus{outline:none;border-color:var(--ink)}
+.vf-built{margin:20px 0 0;padding-top:16px;border-top:1px solid var(--rule);min-height:74px}
+.vf-built .w{font-family:var(--serif);font-size:33px;line-height:1.3;color:var(--green)}
+.vf-built .g{font-size:14px;line-height:1.85;color:var(--ink-2);margin-top:5px}
+.vf-warn{margin:7px 0 0;font-size:13px;line-height:1.75;color:var(--ink-3)}
+.vf-morph{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:16px;padding-top:14px;border-top:1px solid var(--rule)}
+.vf-morph .lead{font-size:11.5px;letter-spacing:.1em;color:var(--ink-3);margin-right:2px}
+.vf-morph button{font:inherit;font-size:12.5px;line-height:1;padding:6px 9px;border:1px solid var(--rule-2);border-radius:1px;background:none;color:var(--ink-2);cursor:pointer;transition:border-color .16s,color .16s}
+.vf-morph button:hover:not(:disabled){border-color:var(--ink-3);color:var(--ink)}
+.vf-morph button:disabled{opacity:.32;border-color:var(--rule);cursor:not-allowed}
+@media (max-width:620px){
+  .vf-part .t{font-size:22px}
+  .vf-input{flex:1 1 100%}
+}
+
 /* 来源与页脚 */
 .src-list{margin:20px 0 0;padding:0;list-style:none;counter-reset:s}
 .src-list li{counter-increment:s;position:relative;padding:11px 0 11px 34px;border-bottom:1px solid var(--rule);font-size:14px;line-height:1.75;color:var(--ink-2)}
@@ -244,6 +289,7 @@ blockquote{margin:24px 0;padding:0 0 0 20px;border-left:1px solid var(--rule-2);
       <a href="#kio">缘起</a>
       <a href="#alfabeto">字母</a>
       <a href="#reguloj">规则</a>
+      <a href="#vortfarado">造词</a>
       <a href="#vortoj">单词</a>
       <a href="#frazoj">短语</a>
       <a href="#movado">运动</a>
@@ -261,11 +307,12 @@ blockquote{margin:24px 0;padding:0 0 0 20px;border-left:1px solid var(--rule-2);
       <li><a href="#kio"><span class="n">01</span>缘起</a></li>
       <li><a href="#alfabeto"><span class="n">02</span>字母与发音</a></li>
       <li><a href="#reguloj"><span class="n">03</span>十六条规则</a></li>
-      <li><a href="#vortoj"><span class="n">04</span>八个词</a></li>
-      <li><a href="#frazoj"><span class="n">05</span>常用短语</a></li>
-      <li><a href="#movado"><span class="n">06</span>运动与数据</a></li>
-      <li><a href="#ludo"><span class="n">07</span>十题闯关</a></li>
-      <li><a href="#fontoj"><span class="n">08</span>来源</a></li>
+      <li><a href="#vortfarado"><span class="n">04</span>造词引擎</a></li>
+      <li><a href="#vortoj"><span class="n">05</span>八个词</a></li>
+      <li><a href="#frazoj"><span class="n">06</span>常用短语</a></li>
+      <li><a href="#movado"><span class="n">07</span>运动与数据</a></li>
+      <li><a href="#ludo"><span class="n">08</span>十题闯关</a></li>
+      <li><a href="#fontoj"><span class="n">09</span>来源</a></li>
     </ol>
   </nav>
 
@@ -398,9 +445,54 @@ blockquote{margin:24px 0;padding:0 0 0 20px;border-left:1px solid var(--rule-2);
       <aside class="note"><span class="tag">注</span><b>"只有十六条规则"是一种流传很广的简化。</b>十六条是官方核心，但它没有涵盖语序、疑问词 <span class="eo">ĉu</span>、四十五个相关词（<span class="eo">kiu, tiu, ĉiu …</span>）、反身代词 <span class="eo">si</span> 的用法，以及 <span class="eo">-ig- / -iĝ-</span> 这类使动与自动的区别。完整的语法参考 PMEG 有几百页。入门先掌握这十六条是对的，但别把"规则少"理解成"没有语法"。</aside>
     </section>
 
-    <section class="sec" id="vortoj">
+    <section class="sec" id="vortfarado">
       <div class="sec-head">
         <p class="sec-num">04</p>
+        <h2>造词：把规则写成函数</h2>
+        <p class="dek">上一节第 2、3、5、6、7、11 条讲的都是词尾与词缀的拼接。既然这些拼接没有例外，它就能被写成代码：一个词根 + 若干官方词缀 + 一个词尾，必定得到合法的词。</p>
+      </div>
+
+      <p>官方词缀共 41 个——10 个前缀、31 个后缀，1905 年随《世界语基础》冻结，至今不得增删。它们对全体词根开放，不像英语的 <span class="eo">un- / dis-</span> 只服务少数单词：<span class="eo">komput-</span>（计算）接 <span class="eo">-il-</span>（工具）得 <span class="eo">komputilo</span>（计算机），<span class="eo">manĝ-</span>（吃）接 <span class="eo">-aĵ-</span>（具体物）得 <span class="eo">manĝaĵo</span>（食物）。所以世界语的词汇量不是靠背单词堆出来的，而是靠现场拼。</p>
+
+      <p>但词缀不是随便接的。<span class="eo">-il-</span> 要求前面是动作词根，<span class="eo">-in-</span> 要求前面是有生命的词根。所以 <span class="eo">komputilo</span> 成立；而按规则拿 <span class="eo">dom-</span>（房子）接 <span class="eo">-in-</span>，推不出"女房子"——语言里确实有 <span class="eo">domino</span> 这个词，但它是独立借进来的"淑女／多米诺"，不是这条规则生成的。下面的引擎把这条约束一起写了进去。</p>
+
+      <div class="vf-box">
+        <p class="vf-label">拆词 · 看一个词由哪几块拼成</p>
+        <div class="vf-line">
+          <input class="vf-input" id="vfWord" type="text" value="komputilo" autocomplete="off" spellcheck="false" aria-label="输入一个世界语单词">
+          <button class="btn btn-quiet" id="vfSample" type="button">换一个例子</button>
+        </div>
+        <div class="vf-out" id="vfOut" aria-live="polite"></div>
+        <div class="vf-morph" id="vfMorph"></div>
+      </div>
+
+      <div class="vf-box">
+        <p class="vf-label">造词 · 词根 + 前缀 + 后缀 + 词尾</p>
+        <div class="vf-group">
+          <span>词根</span>
+          <select class="vf-select" id="vfRoot" aria-label="选择词根"></select>
+        </div>
+        <div class="vf-group">
+          <span>前缀（可叠加）</span>
+          <div class="vf-chips" id="vfPre"></div>
+        </div>
+        <div class="vf-group">
+          <span>后缀（只列出与词根类别相容的）</span>
+          <div class="vf-chips" id="vfSuf"></div>
+        </div>
+        <div class="vf-group">
+          <span>词尾</span>
+          <div class="vf-chips" id="vfFin"></div>
+        </div>
+        <div class="vf-built" id="vfBuilt" aria-live="polite"></div>
+      </div>
+
+      <aside class="note"><span class="tag">注</span><b>词素表就是这套引擎的边界。</b>页面内置 315 个常用词根，覆盖日常派生的大半；超出这张表的词会显示"找不到组合"，那是词典缺口，不是语法错误。<span class="eo">-um-</span> 的语义由习惯决定（<span class="eo">krucumo</span> 十字架、<span class="eo">brakumo</span> 拥抱），引擎只能提示、不能推断。专名、外来词和三十来个基础虚词不参与切分。</aside>
+    </section>
+
+    <section class="sec" id="vortoj">
+      <div class="sec-head">
+        <p class="sec-num">05</p>
         <h2>八个词，先开口</h2>
         <p class="dek">点击任意一行可以播放录音（来自本项目的 audio 目录）。先听重音落在哪，再跟着念。</p>
       </div>
@@ -437,7 +529,7 @@ blockquote{margin:24px 0;padding:0 0 0 20px;border-left:1px solid var(--rule-2);
 
     <section class="sec" id="frazoj">
       <div class="sec-head">
-        <p class="sec-num">05</p>
+        <p class="sec-num">06</p>
         <h2>常用短语</h2>
         <p class="dek">先用在最有用的地方：打招呼、道谢、听不懂的时候求助。重音照例在倒数第二个音节。</p>
       </div>
@@ -490,7 +582,7 @@ blockquote{margin:24px 0;padding:0 0 0 20px;border-left:1px solid var(--rule-2);
 
     <section class="sec" id="movado">
       <div class="sec-head">
-        <p class="sec-num">06</p>
+        <p class="sec-num">07</p>
         <h2>运动、数据与争议</h2>
         <p class="dek">世界语最容易被讲错的地方是"有多少人在用"。诚实的答案是一个很大的区间：统计口径不同，结果能差三十倍。</p>
       </div>
@@ -516,7 +608,7 @@ blockquote{margin:24px 0;padding:0 0 0 20px;border-left:1px solid var(--rule-2);
 
     <section class="sec" id="ludo">
       <div class="sec-head">
-        <p class="sec-num">07</p>
+        <p class="sec-num">08</p>
         <h2>十题闯关</h2>
         <p class="dek">题目只考本文出现过的内容。答错会给出解析，做完可以重来；最好成绩会记在这台设备上。</p>
       </div>
@@ -554,7 +646,7 @@ blockquote{margin:24px 0;padding:0 0 0 20px;border-left:1px solid var(--rule-2);
 
     <section class="sec" id="fontoj">
       <div class="sec-head">
-        <p class="sec-num">08</p>
+        <p class="sec-num">09</p>
         <h2>来源与延伸</h2>
         <p class="dek">页面里的年份、规则条文与数字都可以在下面对到出处。数据核对于 2026 年 11 月。</p>
       </div>
@@ -784,12 +876,12 @@ blockquote{margin:24px 0;padding:0 0 0 20px;border-left:1px solid var(--rule-2);
     var best = readBest();
     if (best === null || score > best){ writeBest(score); best = score; }
     var note;
-    if (score === 10) note = '全对。字母、词尾和几个常用词都已经拿下，可以去看第 05 节的短语表了。';
+    if (score === 10) note = '全对。字母、词尾和几个常用词都已经拿下，可以去看第 06 节的短语表了。';
     else if (score >= 8) note = '大部分对了。回头看第 03 节第 2、3、6 条，扣分多半在词尾。';
     else if (score >= 5) note = '及格。建议先把第 02 节的字母表过一遍，再回来做一次。';
     else note = '别急，先读第 02、03 节，字母和词尾是这套语法的地基。';
     document.getElementById('finalNote').textContent = note + '（最好成绩 ' + best + ' / 10）';
-    showBest();
+  showBest();
   }
 
   function restart(){
@@ -797,7 +889,7 @@ blockquote{margin:24px 0;padding:0 0 0 20px;border-left:1px solid var(--rule-2);
     quizResult.hidden = true;
     quizBody.hidden = false;
     renderQuestion();
-    showBest();
+  showBest();
   }
 
   nextBtn.addEventListener('click', next);
@@ -817,6 +909,282 @@ blockquote{margin:24px 0;padding:0 0 0 20px;border-left:1px solid var(--rule-2);
 
   renderQuestion();
   showBest();
+})();
+</script>
+
+<script src="lexikon.js"></script>
+<script src="vortfarado.js"></script>
+<script>
+/* 造词引擎界面 */
+(function(){
+  'use strict';
+  var VF = window.Vortfarado;
+  if (!VF) return;
+  var L = VF.data;
+
+  function esc(s){
+    return String(s == null ? '' : s).replace(/[&<>"]/g, function(c){
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
+    });
+  }
+
+  /* ---------------- 拆词 ---------------- */
+  var inp = document.getElementById('vfWord');
+  var out = document.getElementById('vfOut');
+  var altIdx = 0;
+  var SAMPLES = ['komputilo','lernejo','malboneco','bopatrino','lernejestro','manĝaĵo','samideano','gepatroj','konstruita','duono','riĉulo','vidiĝi'];
+  var sampleAt = 0;
+
+  function renderWord(){
+    var a = VF.analyze(inp.value);
+    if (!a.ok){
+      out.innerHTML = '<p class="vf-err">' + esc(a.error || '无法解析') + '</p>';
+      renderMorph();
+      return;
+    }
+    var cands = a.candidates.slice(0, 3);
+    if (altIdx >= cands.length) altIdx = 0;
+    var c = cands[altIdx];
+    var html = '<div class="vf-parts">';
+    c.parts.forEach(function(p, i){
+      if (i) html += '<span class="vf-plus">+</span>';
+      html += '<div class="vf-part k-' + p.kind + '"><span class="t">' + esc(p.text) +
+              '</span><span class="z">' + esc(p.zh) + '</span></div>';
+    });
+    if (c.ending){
+      html += '<span class="vf-plus">+</span>';
+      html += '<div class="vf-part k-fin"><span class="t">' + esc(c.ending.key) +
+              '</span><span class="z">' + esc(c.ending.meta ? c.ending.meta.zh : '词尾') + '</span></div>';
+    }
+    html += '</div>';
+
+    if (a.whole){
+      html += '<p class="vf-sum">这个词属于基础词汇，整词记忆，机械切分没有意义。</p>';
+    } else {
+      var bits = c.parts.map(function(p){ return p.zh; });
+      if (c.ending && c.ending.meta) bits.push(c.ending.meta.zh);
+      html += '<p class="vf-sum">构词：' + bits.map(esc).join(' + ') + '，拼接顺序合法。</p>';
+      if (c.cls){
+        var okSufs = Object.keys(L.suf).filter(function(k){
+          var m = L.suf[k];
+          return !m.nick && m.from.indexOf(c.cls) !== -1;
+        });
+        var head = okSufs.slice(0, 8).map(function(k){ return '-' + k + '-'; }).join(' ');
+        var tail = okSufs.length > 8 ? ' 等 ' + okSufs.length + ' 个' : '';
+        html += '<p class="vf-sum">语义类别：<b>' + VF.clsName(c.cls) + '</b>，可再接 ' + head + tail + '</p>';
+      }
+    }
+
+    if (cands.length > 1){
+      html += '<p class="vf-alt">另有 ' + (cands.length - 1) + ' 种切法：';
+      cands.forEach(function(cc, i){
+        var lbl = cc.parts.map(function(p){ return p.text; }).join('|');
+        html += '<button type="button" data-i="' + i + '"' +
+                (i === altIdx ? ' class="on"' : '') + '>' + esc(lbl) + '</button>';
+      });
+      html += '</p>';
+    }
+    out.innerHTML = html;
+    renderMorph();
+  }
+
+  out.addEventListener('click', function(e){
+    var b = e.target.closest ? e.target.closest('button[data-i]') : null;
+    if (!b) return;
+    altIdx = parseInt(b.getAttribute('data-i'), 10) || 0;
+    renderWord();
+  });
+
+  var timer = null;
+  inp.addEventListener('input', function(){
+    altIdx = 0;
+    clearTimeout(timer);
+    timer = setTimeout(renderWord, 140);
+  });
+
+  document.getElementById('vfSample').addEventListener('click', function(){
+    sampleAt = (sampleAt + 1) % SAMPLES.length;
+    inp.value = SAMPLES[sampleAt];
+    altIdx = 0;
+    renderWord();
+  });
+
+  /* ---------------- 变形 ---------------- */
+  var morphBox = document.getElementById('vfMorph');
+  var MORPHS = [
+    { t: '复数', op: { num: 'pl' } },
+    { t: '宾格', op: { cas: 'acc' } },
+    { t: '复数宾格', op: { num: 'pl', cas: 'acc' } },
+    { t: '变形容词', op: { pos: 'adj' } },
+    { t: '变副词', op: { pos: 'adv' } },
+    { t: '现在时', op: { ending: 'as' } },
+    { t: '过去时', op: { ending: 'is' } },
+    { t: '将来时', op: { ending: 'os' } },
+    { t: '加 -et-', op: { addSuf: 'et' } },
+    { t: '加 mal-', op: { addPre: 'mal' } }
+  ];
+
+  var morphLead = document.createElement('span');
+  morphLead.className = 'lead';
+  morphLead.textContent = '变形';
+  morphBox.appendChild(morphLead);
+
+  MORPHS.forEach(function(m){
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.textContent = m.t;
+    b.setAttribute('data-op', JSON.stringify(m.op));
+    b.addEventListener('click', function(){
+      var r = VF.conjugate(inp.value, m.op);
+      if (!r.ok) return;
+      inp.value = r.word;
+      altIdx = 0;
+      renderWord();
+      if (r.notes && r.notes.length){
+        out.insertAdjacentHTML('beforeend', r.notes.map(function(w){
+          return '<p class="vf-warn">' + esc(w) + '</p>';
+        }).join(''));
+      }
+    });
+    morphBox.appendChild(b);
+  });
+
+  function renderMorph(){
+    var btns = morphBox.querySelectorAll('button');
+    Array.prototype.forEach.call(btns, function(b){
+      var op = JSON.parse(b.getAttribute('data-op'));
+      var r = VF.conjugate(inp.value, op);
+      b.disabled = !r.ok;
+      b.title = r.ok ? (inp.value + ' \u2192 ' + r.word + (r.notes && r.notes.length ? '（' + r.notes.join('；') + '）' : '')) : (r.reason || '不适用');
+    });
+  }
+
+  /* ---------------- 造词 ---------------- */
+  var rootSel = document.getElementById('vfRoot');
+  var preBox = document.getElementById('vfPre');
+  var sufBox = document.getElementById('vfSuf');
+  var finBox = document.getElementById('vfFin');
+  var builtOut = document.getElementById('vfBuilt');
+
+  var CLS_LABEL = { ag: '动作', obj: '事物', prop: '性质', liv: '有生命', num: '数词', rel: '指示' };
+  var state = { root: 'komput', pres: [], sufs: ['il'], fin: 'o' };
+
+  var groups = {};
+  Object.keys(L.roots).forEach(function(k){
+    var cls = L.roots[k][1];
+    (groups[cls] = groups[cls] || []).push(k);
+  });
+  ['ag','obj','prop','liv','num','rel'].forEach(function(cls){
+    if (!groups[cls]) return;
+    var og = document.createElement('optgroup');
+    og.label = CLS_LABEL[cls] || cls;
+    groups[cls].forEach(function(k){
+      var o = document.createElement('option');
+      o.value = k;
+      o.textContent = k + ' — ' + L.roots[k][0];
+      og.appendChild(o);
+    });
+    rootSel.appendChild(og);
+  });
+  rootSel.value = state.root;
+
+  Object.keys(L.pre).forEach(function(k){
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'vf-chip';
+    b.setAttribute('data-pre', k);
+    b.textContent = k + '-  ' + L.pre[k].zh;
+    b.addEventListener('click', function(){
+      var i = state.pres.indexOf(k);
+      if (i === -1) state.pres.push(k); else state.pres.splice(i, 1);
+      refresh();
+    });
+    preBox.appendChild(b);
+  });
+
+  Object.keys(L.fin).forEach(function(k){
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'vf-chip';
+    b.setAttribute('data-fin', k);
+    b.textContent = '-' + k + '  ' + L.fin[k].zh;
+    b.addEventListener('click', function(){
+      state.fin = k;
+      refresh();
+    });
+    finBox.appendChild(b);
+  });
+
+  rootSel.addEventListener('change', function(){
+    state.root = rootSel.value;
+    state.sufs = [];
+    refresh();
+  });
+
+  function currentCls(){
+    var cls = L.roots[state.root][1];
+    state.sufs.forEach(function(s){
+      var m = L.suf[s];
+      if (m && m.to !== 'same') cls = m.to;
+    });
+    return cls;
+  }
+
+  function renderSufChips(){
+    sufBox.innerHTML = '';
+    var cls = currentCls();
+    Object.keys(L.suf).forEach(function(k){
+      var m = L.suf[k];
+      var picked = state.sufs.indexOf(k) !== -1;
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'vf-chip' + (picked ? ' on' : '');
+      b.textContent = '-' + k + '-  ' + m.zh;
+      if (m.nick){
+        b.disabled = true;
+        b.title = '昵称后缀会把词根截断，本工具不自动生成';
+      } else if (!picked && m.from.indexOf(cls) === -1){
+        b.disabled = true;
+        b.title = '要求 ' + m.from.map(VF.clsName).join(' / ') + ' 类词根，当前是 ' + VF.clsName(cls);
+      }
+      b.addEventListener('click', function(){
+        var i = state.sufs.indexOf(k);
+        if (i === -1) state.sufs.push(k); else state.sufs.splice(i, 1);
+        refresh();
+      });
+      sufBox.appendChild(b);
+    });
+  }
+
+  function renderBuilt(){
+    var r = VF.build({ pre: state.pres, root: state.root, sufs: state.sufs, ending: state.fin });
+    if (!r.ok || r.errors.length){
+      builtOut.innerHTML = '<p class="vf-err">' + r.errors.map(esc).join('<br>') + '</p>';
+      return;
+    }
+    var html = '<div class="w">' + esc(r.word) + '</div>';
+    html += '<div class="g">' + r.parts.map(function(p){
+      return esc(p.text) + '（' + esc(p.zh) + '）';
+    }).join(' + ') + '</div>';
+    if (r.warnings.length){
+      html += r.warnings.map(function(w){ return '<p class="vf-warn">' + esc(w) + '</p>'; }).join('');
+    }
+    builtOut.innerHTML = html;
+  }
+
+  function refresh(){
+    Array.prototype.forEach.call(preBox.children, function(b){
+      b.classList.toggle('on', state.pres.indexOf(b.getAttribute('data-pre')) !== -1);
+    });
+    Array.prototype.forEach.call(finBox.children, function(b){
+      b.classList.toggle('on', b.getAttribute('data-fin') === state.fin);
+    });
+    renderSufChips();
+    renderBuilt();
+  }
+
+  renderWord();
+  refresh();
 })();
 </script>
 </body>
