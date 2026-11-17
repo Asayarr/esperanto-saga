@@ -3,35 +3,126 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>世界语 Esperanto</title>
-<meta name="description" content="世界语学习页：字母与发音、十六条官方语法、构词引擎、常用词与短语、十题闯关。">
-<link rel="canonical" href="Esperanto.html">
-<meta http-equiv="refresh" content="0; url=Esperanto.html">
-<style>
-  :root{
-    --paper:#FBFAF6;
-    --ink:#1B1B1A;
-    --ink-3:#6B6459;
-    --green:#1F6B3B;
-    --green-line:#BFD5C4;
-    --serif:Georgia,"Source Han Serif SC","Noto Serif CJK SC","STZhongsong","Songti SC",SimSun,serif;
-  }
-  body{
-    margin:0;min-height:100vh;display:grid;place-items:center;
-    background:var(--paper);color:var(--ink);
-    font-family:"Segoe UI","Microsoft YaHei","PingFang SC",system-ui,sans-serif;
-    -webkit-font-smoothing:antialiased;
-  }
-  p{margin:0;font-size:13px;line-height:1.9;color:var(--ink-3);letter-spacing:.02em}
-  a{
-    font-family:var(--serif);font-size:22px;color:var(--green);
-    text-decoration:none;border-bottom:1px solid var(--green-line);padding-bottom:2px;
-  }
-  a:hover{border-bottom-color:var(--green)}
-</style>
+<title>世界语 Esperanto · 一门为沟通而造的语言</title>
+<meta name="description" content="世界语（Esperanto）学习站：字母与发音、十六条官方语法、构词引擎、常用词与短语、运动史与数据、十题闯关。">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-<p>正在进入 <a href="Esperanto.html">世界语 Esperanto</a></p>
-<script>location.replace('Esperanto.html');</script>
+<a class="skip" href="#main">跳到正文</a>
+
+<header class="site-head">
+  <div class="wrap">
+    <a class="logo" href="index.html"><svg class="star" viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M12 1.6l3.1 6.3 6.9 1-5 4.9 1.2 6.9L12 17.4 5.8 20.7 7 13.8 2 8.9l6.9-1z" fill="currentColor"/></svg>世界语<em>Esperanto</em></a>
+    <nav class="site-nav" aria-label="站点导航">
+      <a href="index.html" class="on">首页</a>
+      <a href="historio.html">缘起</a>
+      <a href="alfabeto.html">字母</a>
+      <a href="reguloj.html">规则</a>
+      <a href="vortfarado.html">造词</a>
+      <a href="vortoj.html">单词</a>
+      <a href="frazoj.html">短语</a>
+      <a href="movado.html">运动</a>
+      <a href="ludo.html">闯关</a>
+      <a href="fontoj.html">来源</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="hero">
+    <div class="wrap">
+      <p class="kick"><svg viewBox="0 0 24 24" width="13" height="13" aria-hidden="true"><path d="M12 1.6l3.1 6.3 6.9 1-5 4.9 1.2 6.9L12 17.4 5.8 20.7 7 13.8 2 8.9l6.9-1z" fill="currentColor"/></svg>Lingvo internacia · 国际辅助语言</p>
+      <h1>世界语<span>Esperanto</span></h1>
+      <p class="lead">1887 年 7 月 26 日，华沙出版了一本四十页左右的俄语小册子，署名"希望者博士"。它提出的不是一种新的民族语言，而是一门谁都不吃亏的第二语言：不属于任何国家，规则尽量少，发音怎么写就怎么读。</p>
+      <div class="facts">
+        <div class="fact"><b>1887</b><span>《第一本书》在华沙出版</span></div>
+        <div class="fact"><b>28</b><span>个字母，一字母一音</span></div>
+        <div class="fact"><b>16</b><span>条官方语法，至今不可改</span></div>
+        <div class="fact"><b>41</b><span>个官方词缀，可自由组合</span></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap">
+
+    <div class="section-title">
+      <h2>九节内容</h2>
+      <span>按顺序读，或直接挑一节</span>
+    </div>
+    <div class="cards">
+      <a class="card" href="historio.html">
+        <span class="no">01</span>
+        <h3>缘起</h3>
+        <p>一门没有国土的语言为什么被造出来，以及 1905 年那条"谁都不能改"的规矩。</p>
+      </a>
+      <a class="card" href="alfabeto.html">
+        <span class="no">02</span>
+        <h3>字母与发音</h3>
+        <p>28 个字母，一字母一音。带帽字母 ĉ ĝ ĥ ĵ ŝ ŭ 怎么念，重音为什么永远在倒数第二音节。</p>
+      </a>
+      <a class="card" href="reguloj.html">
+        <span class="no">03</span>
+        <h3>十六条官方规则</h3>
+        <p>1905 年冻结至今的核心语法。词尾怎么变格、时态只有六个词尾、宾格 -n 怎么加。</p>
+      </a>
+      <a class="card" href="vortfarado.html">
+        <span class="no">04</span>
+        <h3>造词引擎</h3>
+        <p>把构词规则写成代码：输入一个词看它由哪几块拼成，或者自己挑词根词缀造一个词。</p>
+      </a>
+      <a class="card" href="vortoj.html">
+        <span class="no">05</span>
+        <h3>八个词，先开口</h3>
+        <p>问候、道谢、爱、书、房子、水、母亲、父亲。点一行听录音，先听重音落在哪。</p>
+      </a>
+      <a class="card" href="frazoj.html">
+        <span class="no">06</span>
+        <h3>常用短语</h3>
+        <p>打招呼、道别、礼貌用语，以及一句最实用的"请说慢一点"。</p>
+      </a>
+      <a class="card" href="movado.html">
+        <span class="no">07</span>
+        <h3>运动、数据与争议</h3>
+        <p>"有多少人在用世界语"这个问题，不同口径能差三十倍。诚实的答案是一个区间。</p>
+      </a>
+      <a class="card" href="ludo.html">
+        <span class="no">08</span>
+        <h3>十题闯关</h3>
+        <p>十道题只考前面出现过的内容，答错给解析，最好成绩记在这台设备上。</p>
+      </a>
+      <a class="card" href="fontoj.html">
+        <span class="no">09</span>
+        <h3>来源与延伸</h3>
+        <p>页面上每个年份和条文都能对到出处：Fundamento、PMEG、Esperantopedia。</p>
+      </a>
+    </div>
+
+    <div class="section-title">
+      <h2>不用读完也能玩</h2>
+      <span>两个交互入口</span>
+    </div>
+    <div class="cards" style="grid-template-columns:repeat(2,minmax(0,1fr))">
+      <a class="card" href="vortfarado.html">
+        <span class="no">工具</span>
+        <h3>构词引擎 <span class="eo">vortfarado</span></h3>
+        <p>内置 315 个词根、41 个官方词缀。输入 <span class="eo">komputilo</span> 会拆成 <span class="eo">komput</span> + <span class="eo">il</span> + <span class="eo">o</span>：计算 + 工具 + 名词。也可以反过来自己造词。</p>
+      </a>
+      <a class="card" href="ludo.html">
+        <span class="no">自测</span>
+        <h3>十题闯关 <span class="eo">kvizo</span></h3>
+        <p>十分钟摸清自己记住了多少。答错不扣分，会告诉你为什么错，以及该回去看哪一节。</p>
+      </a>
+    </div>
+
+  </div>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <p><span class="brandline">Esperanto</span> · 一门为沟通而造的语言。语法与词缀依据《世界语基础》（Fundamento de Esperanto, 1905）与 PMEG。</p>
+    <p>数据核对于 2026 年 11 月。</p>
+  </div>
+</footer>
 </body>
 </html>
