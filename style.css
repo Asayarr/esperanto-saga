@@ -19,8 +19,8 @@
   --bg:#FFFFFF;
   --bg-soft:#F7FBF8;
 
-  --serif:Georgia,"Source Han Serif SC","Noto Serif CJK SC","STZhongsong","Songti SC",SimSun,serif;
-  --sans:"Segoe UI","Microsoft YaHei","PingFang SC","Hiragino Sans GB",system-ui,sans-serif;
+  --serif:Georgia,"Noto Serif SC","Source Han Serif SC","Songti SC","STZhongsong",SimSun,serif;
+  --sans:"Noto Sans SC","Microsoft YaHei UI","Microsoft YaHei","PingFang SC","Hiragino Sans GB",system-ui,sans-serif;
   --mono:"Cascadia Mono","JetBrains Mono",Consolas,"Liberation Mono",monospace;
   --ease:cubic-bezier(.2,.6,.2,1);
 }
