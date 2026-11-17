@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>十题闯关 · LA VERDA STELO</title>
+<meta name="description" content="题目只考本文出现过的内容。答错会给出解析，做完可以重来；最好成绩会记在这台设备上。">
+<meta name="theme-color" content="#04060A">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<canvas id="starfield" aria-hidden="true"></canvas>
+<div class="veil" aria-hidden="true"></div>
+
+<div class="app">
+
+  <header class="site-head">
+    <div class="wrap">
+      <a class="logo" href="index.html"><svg class="star" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M12 1.4l3.2 6.5 7.1 1-5.2 5 1.3 7.1L12 17.6 5.6 21 6.9 13.9 1.7 8.9l7.1-1z" fill="currentColor"/></svg>
+        世界语<em>Esperanto</em>
+      </a>
+      <nav class="site-nav" aria-label="站点导航">
+        <a href="index.html">首页</a>
+        <a href="promeso.html">承诺</a>
+        <a href="runoj.html">符文</a>
+        <a href="legoj.html">十六律</a>
+        <a href="vortfarado.html">构词术</a>
+        <a href="vortoj.html">首八音</a>
+        <a href="frazoj.html">相逢</a>
+        <a href="stelo.html">绿星</a>
+        <a href="provo.html" class="on">试炼</a>
+        <a href="fontoj.html">典籍</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="page">
+      <p class="crumb"><a href="index.html">首页</a><i>/</i>试炼</p>
+
+      <header class="page-head">
+        <p class="chap-no">Capitro 08<span>PROVO</span></p>
+        <h1>十题闯关</h1>
+        <p class="dek">题目只考本文出现过的内容。答错会给出解析，做完可以重来；最好成绩会记在这台设备上。</p>
+      </header>
+
+      <div class="prose">
+        <div class="quiz">
+                <div class="quiz-top">
+                  <span id="quizCount">第 1 题 / 共 10 题</span>
+                  <span class="num-strong" id="quizScore">答对 0</span>
+                </div>
+                <div class="bar" aria-hidden="true"><i id="quizBar"></i></div>
+        
+                <div id="quizBody" aria-live="polite">
+                  <p class="q" id="qText"></p>
+                  <div class="opts" id="qOpts"></div>
+                  <p class="fb" id="qFeedback"></p>
+                  <div class="quiz-foot">
+                    <span class="best" id="quizBest">最好成绩：—</span>
+                    <button class="btn" type="button" id="nextBtn" disabled>下一题</button>
+                  </div>
+                </div>
+        
+                <div id="quizResult" hidden>
+                  <div class="result">
+                    <div class="score"><span id="finalScore">0</span><small>/ 10</small></div>
+                    <div>
+                      <p id="finalNote"></p>
+                      <button class="btn btn-quiet" type="button" id="restartBtn">重新开始</button>
+                    </div>
+                  </div>
+                </div>
+        
+                <p class="key-hint">键盘操作：<kbd>1</kbd>–<kbd>4</kbd> 选择，<kbd>Enter</kbd> 进入下一题。</p>
+              </div>
+      </div>
+
+        <nav class="pager" aria-label="章节导航">
+          <a class="prev" href="stelo.html"><span class="k">上一章</span><span class="t">绿星 · 运动、数据与争议</span></a>
+          <a class="next" href="fontoj.html"><span class="k">下一章</span><span class="t">典籍 · 来源与延伸</span></a>
+        </nav>
+    </div>
+  </main>
+
+  <footer class="site-foot">
+    <div class="wrap">
+      <p><span class="brandline">Esperanto</span> · 一门为沟通而造的语言。语法与词缀依据《世界语基础》（Fundamento de Esperanto, 1905）与 PMEG。</p>
+      <p>数据核对于 2026 年 11 月。</p>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+(function(){
+  'use strict';
+
+  /* 闯关 */
+  var QUIZ = [
+    { q: '世界语中"你好"怎么说？', opts: ['dankon', 'saluton', 'bonan tagon', 'pardonu'], a: 1,
+      why: 'saluton 来自 saluto（问候）加宾格词尾 -on，字面是"问候（给你）"。' },
+    { q: '世界语中"谢谢"怎么说？', opts: ['dankon', 'saluton', 'bonvolu', 'ĝis revido'], a: 0,
+      why: 'danki 是"感谢"，dankon 是它加宾格的固定说法。' },
+    { q: '世界语名词通常以什么结尾？', opts: ['-a', '-i', '-o', '-n'], a: 2,
+      why: '名词以 -o 结尾，复数加 -j，宾格加 -n；-a 是形容词，-i 是动词不定式。' },
+    { q: '世界语中"书"怎么说？', opts: ['libro', 'domo', 'akvo', 'ami'], a: 0,
+      why: 'libro 是书；domo 房子，akvo 水，ami 爱（动词）。' },
+    { q: '世界语的创始人是谁？', opts: ['柴门霍夫', '施莱耶尔', '托尔金', '奥威尔'], a: 0,
+      why: '柴门霍夫（L. L. Zamenhof）1887 年在华沙出版《第一本书》。施莱耶尔是更早的 Volapük 的作者。' },
+    { q: '世界语中"水"怎么说？', opts: ['akvo', 'pano', 'lakto', 'fajro'], a: 0,
+      why: 'akvo 水；pano 面包，lakto 牛奶，fajro 火。' },
+    { q: '世界语动词现在时以什么结尾？', opts: ['-is', '-as', '-os', '-i'], a: 1,
+      why: '三个时态都以 s 收尾：-as 现在、-is 过去、-os 将来；-i 是不定式。' },
+    { q: '世界语中"母亲"怎么说？', opts: ['patro', 'patrino', 'fratino', 'filino'], a: 1,
+      why: 'patro 父亲加女性后缀 -in- 得 patrino；fratino 是姐妹，filino 是女儿。' },
+    { q: '世界语形容词通常以什么结尾？', opts: ['-o', '-i', '-a', '-j'], a: 2,
+      why: '形容词以 -a 结尾，并按名词加 -j（复数）与 -n（宾格）。' },
+    { q: '世界语创立于哪一年？', opts: ['1887 年', '1905 年', '1859 年', '1917 年'], a: 0,
+      why: '1887 年 7 月 26 日《第一本书》在华沙出版；1905 年是《世界语基础》定稿之年，1859 与 1917 是柴门霍夫的生卒年。' }
+  ];
+
+  var BEST_KEY = 'esperanto.ludo.best.v1';
+  var idx = 0, score = 0, answered = false;
+  var qText = document.getElementById('qText');
+  var qOpts = document.getElementById('qOpts');
+  var qFeedback = document.getElementById('qFeedback');
+  var quizBody = document.getElementById('quizBody');
+  var quizResult = document.getElementById('quizResult');
+  var countEl = document.getElementById('quizCount');
+  var scoreEl = document.getElementById('quizScore');
+  var bestEl = document.getElementById('quizBest');
+  var nextBtn = document.getElementById('nextBtn');
+  var barFill = document.getElementById('quizBar');
+  var KEYS = ['A', 'B', 'C', 'D'];
+
+  function readBest(){
+    try { var v = localStorage.getItem(BEST_KEY); return v === null ? null : parseInt(v, 10); }
+    catch (e) { return null; }
+  }
+  function writeBest(v){
+    try { localStorage.setItem(BEST_KEY, String(v)); } catch (e) {}
+  }
+  function showBest(){
+    var b = readBest();
+    bestEl.textContent = '最好成绩：' + (b === null ? '—' : b + ' / 10');
+  }
+
+  function renderQuestion(){
+    var item = QUIZ[idx];
+    answered = false;
+    qText.textContent = '第 ' + (idx + 1) + ' 题：' + item.q;
+    countEl.textContent = '第 ' + (idx + 1) + ' 题 / 共 ' + QUIZ.length + ' 题';
+    scoreEl.textContent = '答对 ' + score;
+    qFeedback.textContent = '';
+    nextBtn.disabled = true;
+    nextBtn.textContent = idx === QUIZ.length - 1 ? '看结果' : '下一题';
+    barFill.style.transform = 'scaleX(' + (idx / QUIZ.length) + ')';
+
+    qOpts.innerHTML = '';
+    item.opts.forEach(function(opt, i){
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'opt';
+      b.dataset.i = String(i);
+      b.innerHTML = '<span class="k">' + KEYS[i] + '</span><span class="txt"></span><span class="tag"></span>';
+      b.querySelector('.txt').textContent = opt;
+      b.addEventListener('click', function(){ choose(i); });
+      qOpts.appendChild(b);
+    });
+  }
+
+  function choose(i){
+    if (answered) return;
+    answered = true;
+    var item = QUIZ[idx];
+    var btns = Array.prototype.slice.call(qOpts.querySelectorAll('.opt'));
+    var right = i === item.a;
+    if (right) score++;
+
+    btns.forEach(function(b, k){
+      b.disabled = true;
+      if (k === item.a){
+        b.classList.add('is-correct');
+        b.querySelector('.tag').textContent = '正确答案';
+      } else if (k === i){
+        b.classList.add('is-wrong');
+        b.querySelector('.tag').textContent = '不对';
+      }
+    });
+
+    qFeedback.innerHTML = (right ? '<b>答对了。</b>' : '<b>不对。</b>') + item.why;
+    scoreEl.textContent = '答对 ' + score;
+    nextBtn.disabled = false;
+    barFill.style.transform = 'scaleX(' + ((idx + 1) / QUIZ.length) + ')';
+  }
+
+  function next(){
+    if (!answered) return;
+    if (idx === QUIZ.length - 1){ showResult(); return; }
+    idx++;
+    renderQuestion();
+  }
+
+  function showResult(){
+    quizBody.hidden = true;
+    quizResult.hidden = false;
+    document.getElementById('finalScore').textContent = String(score);
+    var best = readBest();
+    if (best === null || score > best){ writeBest(score); best = score; }
+    var note;
+    if (score === 10) note = '全对。字母、词尾和几个常用词都已经拿下，可以去看第 06 节的短语表了。';
+    else if (score >= 8) note = '大部分对了。回头看第 03 节第 2、3、6 条，扣分多半在词尾。';
+    else if (score >= 5) note = '及格。建议先把第 02 节的字母表过一遍，再回来做一次。';
+    else note = '别急，先读第 02、03 节，字母和词尾是这套语法的地基。';
+    document.getElementById('finalNote').textContent = note + '（最好成绩 ' + best + ' / 10）';
+  showBest();
+  }
+
+  function restart(){
+    idx = 0; score = 0;
+    quizResult.hidden = true;
+    quizBody.hidden = false;
+    renderQuestion();
+  showBest();
+  }
+
+  nextBtn.addEventListener('click', next);
+  document.getElementById('restartBtn').addEventListener('click', restart);
+
+  document.addEventListener('keydown', function(e){
+    if (e.target && /INPUT|TEXTAREA|SELECT/.test(e.target.tagName)) return;
+    if (!quizBody.hidden){
+      if (/^[1-4]$/.test(e.key)){
+        var n = parseInt(e.key, 10) - 1;
+        if (!answered && n < QUIZ[idx].opts.length){ e.preventDefault(); choose(n); }
+      } else if (e.key === 'Enter' && answered && !nextBtn.disabled){
+        e.preventDefault(); next();
+      }
+    }
+  });
+
+
+  renderQuestion();
+  showBest();
+})();
+</script>
+<script src="starfield.js"></script>
+</body>
+</html>
