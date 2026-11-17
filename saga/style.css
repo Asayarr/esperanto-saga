@@ -29,6 +29,7 @@ html{-webkit-text-size-adjust:100%}
 body{
   margin:0;color:var(--ink);
   font-family:var(--zh);
+  font-weight:500;
   font-size:16.5px;line-height:1.92;
   background:var(--paper);
   -webkit-font-smoothing:antialiased;
@@ -184,7 +185,7 @@ a:hover{color:var(--green-2);border-bottom-color:var(--green-2)}
   font-size:11px;letter-spacing:.44em;text-transform:uppercase;color:var(--gold);
 }
 .title-page h1{
-  margin:0;font-family:var(--zh);font-weight:500;
+  margin:0;font-family:var(--zh);font-weight:600;
   font-size:clamp(40px,7vw,74px);line-height:1.18;letter-spacing:.2em;text-indent:.2em;color:var(--ink);
 }
 .tp-latin{
@@ -204,7 +205,7 @@ a:hover{color:var(--green-2);border-bottom-color:var(--green-2)}
 .foreword .lead{font-size:18px;line-height:2.1;color:var(--ink);text-indent:2em}
 .foreword .sig{
   margin-top:36px;text-align:right;font-family:var(--latin);font-style:italic;
-  font-size:13px;letter-spacing:.08em;color:var(--ink-3);
+  font-size:13px;letter-spacing:.08em;color:var(--ink-3);font-weight:400;
 }
 
 /* ============================================================
@@ -216,7 +217,7 @@ a:hover{color:var(--green-2);border-bottom-color:var(--green-2)}
   margin:0 0 14px;font-family:var(--latin);
   font-size:11px;letter-spacing:.4em;text-transform:uppercase;color:var(--gold);
 }
-.contents-head h2{margin:0;font-family:var(--zh);font-weight:500;font-size:26px;letter-spacing:.24em;text-indent:.24em}
+.contents-head h2{margin:0;font-family:var(--zh);font-weight:600;font-size:26px;letter-spacing:.24em;text-indent:.24em}
 
 .contents{list-style:none;margin:0;padding:0}
 .contents li{border-bottom:1px dotted var(--rule)}
@@ -226,7 +227,7 @@ a:hover{color:var(--green-2);border-bottom-color:var(--green-2)}
 }
 .contents a:hover{color:var(--green);background:rgba(14,92,51,.05)}
 .contents .c-no{font-family:var(--latin);font-size:12px;letter-spacing:.14em;color:var(--gold)}
-.contents .c-name{display:flex;align-items:baseline;gap:12px;font-size:17px;letter-spacing:.06em}
+.contents .c-name{display:flex;align-items:baseline;gap:12px;font-size:17px;letter-spacing:.06em;font-weight:500}
 .contents .c-name em{
   font-style:italic;font-family:var(--latin);font-size:13px;
   color:var(--ink-4);letter-spacing:.04em;white-space:nowrap;
@@ -257,10 +258,10 @@ a:hover{color:var(--green-2);border-bottom-color:var(--green-2)}
 .chap-no{margin:0 0 18px;font-family:var(--latin);font-size:11.5px;letter-spacing:.3em;color:var(--gold)}
 .chap-no span{color:var(--ink-4);margin-left:12px;font-style:italic;letter-spacing:.14em}
 .chap-head h1{
-  margin:0;font-family:var(--zh);font-weight:500;
+  margin:0;font-family:var(--zh);font-weight:600;
   font-size:clamp(29px,4.4vw,40px);line-height:1.4;letter-spacing:.05em;color:var(--ink);
 }
-.dek{margin:18px 0 0;font-size:16px;line-height:2;color:var(--ink-2);max-width:62ch}
+.dek{margin:18px 0 0;font-size:16px;line-height:2;color:var(--ink-2);max-width:62ch;font-weight:400}
 
 .prose p{margin:0 0 1.15em;color:var(--ink-2);font-size:16px;line-height:2.05}
 .prose strong{color:var(--ink);font-weight:700}
